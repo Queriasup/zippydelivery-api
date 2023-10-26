@@ -1,6 +1,6 @@
+# POSTGRESQL
 version: "3"
 services:
-
    db:
      image: postgres:9.6
      restart: always
@@ -11,3 +11,18 @@ services:
        - 5435:5432
      volumes:
        - ./postgres-data:/bitnami/postgresql/data
+
+
+#MYSQL
+#version: '3'
+#services:
+#  mysql:
+#    image: mysql:latest
+#    container_name: zippydelivery
+#    environment:
+#      MYSQL_ROOT_PASSWORD: 12345678
+#      MYSQL_DATABASE: zippydelivery
+#      MYSQL_USER: root
+#      MYSQL_PASSWORD: 12345678
+#    ports:
+#      - "5435:3306"
