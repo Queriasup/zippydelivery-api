@@ -1,7 +1,7 @@
 package br.com.zippydeliveryapi.api.empresa;
 
 
-import br.com.zippydeliveryapi.modelo.empresa.Empresa;
+import br.com.zippydeliveryapi.model.empresa.Empresa;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class EmpresaRequest {
-    private Empresa empresa;
-
      
      private String nome;
 

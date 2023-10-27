@@ -1,4 +1,4 @@
-package br.com.zippydeliveryapi.api.empresa;
+package br.com.zippydeliveryapi.api.cliente;
 
 import java.util.List;
 
@@ -17,53 +17,51 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.api.cliente.ClienteRequest;
 import br.com.zippydeliveryapi.model.cliente.Cliente;
-import br.com.zippydeliveryapi.model.empresa.Empresa;
-import br.com.zippydeliveryapi.model.empresa.EmpresaService;
-
-
-
+import br.com.zippydeliveryapi.model.cliente.ClienteService;
 
 @RestController
-@RequestMapping("/api/empresa")
+@RequestMapping("/api/cliente")
 @CrossOrigin
 
-public class EmpresaController {
-    
-     @Autowired
-   private EmpresaService empresaService;
+public class ClienteController {
 
-   @PostMapping
-   public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
+    @Autowired
+    private ClienteService clienteService;
 
-      Empresa empresa = empresaService.save(request.build());
-       return new ResponseEntity<Empresa>(empresa, HttpStatus.CREATED);
-   }
+    @PostMapping
+    public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
 
-   @GetMapping
-   public List<Empresa> findAll(){
-      return empresaService.findAll();
-   }
+        Cliente cliente = clienteService.save(request.build());
+        return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
+    }
 
-   @GetMapping("/{id}")
-   public Empresa findById(@PathVariable Long id ){
+    @GetMapping
+    public List<Cliente> findAll() {
 
-      return empresaService.findById(id);
-   }
+        return clienteService.findAll();
+    }
+
+
+    @GetMapping("/{id}")
+    public Cliente findById(@PathVariable Long id) {
+
+        return clienteService.findById(id);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
+    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
 
-        empresaService.update(id, request.build());
+        clienteService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 
-        empresaService.delete(id);
+        clienteService.delete(id);
         return ResponseEntity.ok().build();
     }
+
 
 }

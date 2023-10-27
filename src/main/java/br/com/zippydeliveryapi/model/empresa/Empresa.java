@@ -1,12 +1,10 @@
-package br.com.zippydeliveryapi.modelo.empresa;
+package br.com.zippydeliveryapi.model.empresa;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.hibernate.annotations.Where;
 
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import lombok.AllArgsConstructor;
@@ -17,6 +15,7 @@ import lombok.Setter;
 
 @Entity
 @Table(name="Empresa")
+@Where(clause = "habilitado = true")
 @Builder
 @Getter
 @Setter
@@ -24,9 +23,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Empresa extends EntidadeAuditavel{
 
-   @ManyToOne
-   @JoinColumn(nullable = false)
-   private Empresa empresa;
 
      @Column 
      private String nome;
