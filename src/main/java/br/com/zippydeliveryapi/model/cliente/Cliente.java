@@ -4,11 +4,7 @@ import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Table;
-
-import jakarta.persistence.Id;
 
 import org.hibernate.annotations.Where;
 
@@ -28,17 +24,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @Column(nullable = false, length = 100)
     private String nome;
 
     @Column(unique = true)
     private String cpf;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column

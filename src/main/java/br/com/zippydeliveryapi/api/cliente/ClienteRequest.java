@@ -1,8 +1,6 @@
 package br.com.zippydeliveryapi.api.cliente;
 
 import jakarta.validation.constraints.Email;
-//import javax.validation.constraints.NotBlank;
-//import javax.validation.constraints.NotNull;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

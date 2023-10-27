@@ -1,11 +1,9 @@
 package br.com.zippydeliveryapi.model.cliente;
 
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-//import javax.transaction.Transactional;
 import jakarta.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +21,11 @@ public class ClienteService {
 
     @Transactional
     public Cliente save(Cliente cliente) {
-
+       
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
-
+       
         return repository.save(cliente);
 
     }
@@ -38,7 +36,12 @@ public class ClienteService {
         Cliente cliente = repository.findById(id).get();
         cliente.setNome(clienteAlterado.getNome());
         cliente.setEmail(clienteAlterado.getEmail());
-        //cliente.getUsuario().setPassword(clienteAlterado.getUsuario().getPassword());
+        cliente.setLogradouro(clienteAlterado.getLogradouro());
+        cliente.setBairro(clienteAlterado.getBairro());
+        cliente.setCidade(clienteAlterado.getCidade());
+        cliente.setEstado(clienteAlterado.getEstado());
+        cliente.setCep(clienteAlterado.getCep());
+        cliente.setComplemento(clienteAlterado.getComplemento());
         
         cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
@@ -66,6 +69,8 @@ public class ClienteService {
 
         Cliente cliente = repository.findById(id).get();
         cliente.setHabilitado(Boolean.FALSE);
+        cliente.setCpf("");
+        cliente.setEmail("");
         cliente.setVersao(cliente.getVersao() + 1);
 
         repository.save(cliente);
