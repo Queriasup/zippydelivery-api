@@ -46,8 +46,7 @@ public Produto findById(Long id) {
 public void update(Long id, Produto produtoAlterado) {
 
     Produto produto = repository.findById(id).get();
-    // produto.setCategoria(produtoAlterado.getCategoria());
-
+    produto.setCategoria(produtoAlterado.getCategoria());
     produto.setDescricao(produtoAlterado.getDescricao());
     produto.setTitulo(produtoAlterado.getTitulo());
     produto.setImagem(produtoAlterado.getImagem());
