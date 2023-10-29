@@ -23,7 +23,6 @@ import br.com.zippydeliveryapi.model.cliente.ClienteService;
 @RestController
 @RequestMapping("/api/cliente")
 @CrossOrigin
-
 public class ClienteController {
 
     @Autowired
