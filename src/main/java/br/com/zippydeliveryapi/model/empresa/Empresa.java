@@ -14,51 +14,43 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name="Empresa")
+@Table(name = "Empresa")
 @Where(clause = "habilitado = true")
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Empresa extends EntidadeAuditavel{
+public class Empresa extends EntidadeAuditavel {
 
+    @Column(nullable = false, length = 100)
+    private String nome;
 
-     @Column 
-     private String nome;
-
-   
-    @Column 
+    @Column(unique = true)
     private String cnpj;
 
-    @Column
-    private String senha;
-
-    @Column
+    @Column(nullable = false, unique = true)
     private String email;
 
-     @Column 
-     private String horario;
-
-   
-    @Column 
+    @Column
     private String categoria;
 
     @Column
-    private String img_capa;
+    private String horario;
 
     @Column
-    private String tempo_entrega;
-
-    @Column 
-    private String taxa_frete;
+    private Integer tempoEntrega;
 
     @Column
+    private Double taxaFrete;
+
+    @Column(nullable = false, unique = true)
     private String telefone;
 
     @Column
-    private String img_perfil;
+    private String imgPerfil;
 
+    @Column
+    private String imgCapa;
 
-    
 }

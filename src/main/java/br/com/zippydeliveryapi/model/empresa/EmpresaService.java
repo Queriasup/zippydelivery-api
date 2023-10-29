@@ -17,13 +17,12 @@ public class EmpresaService {
     private EmpresaRepository repository;
 
     @Transactional
-    public Empresa save(Empresa empresa){
+    public Empresa save(Empresa empresa) {
 
-        
-       empresa.setHabilitado(Boolean.TRUE);
-       empresa.setVersao(1L);
-      empresa.setDataCriacao(LocalDate.now());
-       return repository.save(empresa);
+        empresa.setHabilitado(Boolean.TRUE);
+        empresa.setVersao(1L);
+        empresa.setDataCriacao(LocalDate.now());
+        return repository.save(empresa);
     }
 
     @Transactional
@@ -31,18 +30,16 @@ public class EmpresaService {
 
         Empresa empresa = repository.findById(id).get();
         empresa.setNome(empresaAlterado.getNome());
-        empresa.setEmail(empresaAlterado.getEmail());
         empresa.setCnpj(empresaAlterado.getCnpj());
-        empresa.setSenha(empresaAlterado.getSenha());
-        empresa.setHorario(empresaAlterado.getHorario());
+        empresa.setEmail(empresaAlterado.getEmail());
         empresa.setCategoria(empresaAlterado.getCategoria());
-        empresa.setImg_capa(empresaAlterado.getImg_capa());
-        empresa.setTempo_entrega(empresaAlterado.getTempo_entrega());
-        empresa.setTaxa_frete(empresaAlterado.getTaxa_frete());
+        empresa.setHorario(empresaAlterado.getHorario());
+        empresa.setTempoEntrega(empresaAlterado.getTempoEntrega());
+        empresa.setTaxaFrete(empresaAlterado.getTaxaFrete());
         empresa.setTelefone(empresaAlterado.getTelefone());
-        empresa.setImg_perfil(empresaAlterado.getImg_perfil());
-        
-        
+        empresa.setImgPerfil(empresaAlterado.getImgPerfil());
+        empresa.setImgCapa(empresaAlterado.getImgCapa());
+
         empresa.setVersao(empresa.getVersao() + 1);
         repository.save(empresa);
     }
@@ -69,14 +66,10 @@ public class EmpresaService {
 
         Empresa empresa = repository.findById(id).get();
         empresa.setHabilitado(Boolean.FALSE);
-       
+
         empresa.setVersao(empresa.getVersao() + 1);
 
         repository.save(empresa);
     }
 
-
-    
-
-    
 }

@@ -17,43 +17,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.api.cliente.ClienteRequest;
-import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
-
-
-
 
 @RestController
 @RequestMapping("/api/empresa")
 @CrossOrigin
 
 public class EmpresaController {
-    
-     @Autowired
-   private EmpresaService empresaService;
 
-   @PostMapping
-   public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
+    @Autowired
+    private EmpresaService empresaService;
 
-      Empresa empresa = empresaService.save(request.build());
-       return new ResponseEntity<Empresa>(empresa, HttpStatus.CREATED);
-   }
+    @PostMapping
+    public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
 
-   @GetMapping
-   public List<Empresa> findAll(){
-      return empresaService.findAll();
-   }
+        Empresa empresa = empresaService.save(request.build());
+        return new ResponseEntity<Empresa>(empresa, HttpStatus.CREATED);
+    }
 
-   @GetMapping("/{id}")
-   public Empresa findById(@PathVariable Long id ){
+    @GetMapping
+    public List<Empresa> findAll() {
+        return empresaService.findAll();
+    }
 
-      return empresaService.findById(id);
-   }
+    @GetMapping("/{id}")
+    public Empresa findById(@PathVariable Long id) {
+
+        return empresaService.findById(id);
+    }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
+    public ResponseEntity<Empresa> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
 
         empresaService.update(id, request.build());
         return ResponseEntity.ok().build();
