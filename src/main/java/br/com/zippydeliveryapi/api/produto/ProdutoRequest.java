@@ -19,6 +19,9 @@ public class ProdutoRequest {
    @NotNull(message = "O Id da Categoria é de preenchimento obrigatório")
    private Long idCategoria;
 
+   @NotNull(message = "O Id da Empresa é de preenchimento obrigatório")
+   private Long idEmpresa;
+
    @NotNull(message = "O título é de preenchimento obrigatório")
    @NotBlank(message = "O título é de preenchimento obrigatório")
    @Length(max = 500, message = "O título deverá ter no máximo {max} caracteres")
