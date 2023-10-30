@@ -31,7 +31,6 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produtoNovo = request.build();
@@ -67,6 +66,11 @@ public class ProdutoController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         produtoService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/filtrar")
+    public List<List<Object>> produtosPorCategoria() {
+        return produtoService.agruparPorCategoria();
     }
 
 }
