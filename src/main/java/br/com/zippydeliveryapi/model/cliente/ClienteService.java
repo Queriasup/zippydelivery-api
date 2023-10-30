@@ -18,10 +18,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-
+    
     @Transactional
     public Cliente save(Cliente cliente) {
-       
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
@@ -32,7 +31,6 @@ public class ClienteService {
 
     @Transactional
     public void update(Long id, Cliente clienteAlterado) {
-
         Cliente cliente = repository.findById(id).get();
         cliente.setNome(clienteAlterado.getNome());
         cliente.setEmail(clienteAlterado.getEmail());
@@ -48,12 +46,10 @@ public class ClienteService {
     }
 
     public List<Cliente> findAll() {
-
         return repository.findAll();
     }
 
     public Cliente findById(Long id) {
-
         Optional<Cliente> consulta = repository.findById(id);
 
         if (consulta.isPresent()) {
@@ -66,7 +62,6 @@ public class ClienteService {
 
     @Transactional
     public void delete(Long id) {
-
         Cliente cliente = repository.findById(id).get();
         cliente.setHabilitado(Boolean.FALSE);
         cliente.setCpf("");

@@ -1,13 +1,11 @@
 package br.com.zippydeliveryapi.model.cliente;
 
-import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
+import org.hibernate.annotations.Where;
 
+import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-
-import org.hibernate.annotations.Where;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
