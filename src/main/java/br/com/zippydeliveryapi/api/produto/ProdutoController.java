@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
+import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import jakarta.validation.Valid;
@@ -31,11 +32,15 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @Autowired
+    private EmpresaService empresaService;
+
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produtoNovo = request.build();
 
         produtoNovo.setCategoria(categoriaProdutoService.findById(request.getIdCategoria()));
+        produtoNovo.setEmpresa(empresaService.findById(request.getIdEmpresa()));
         Produto produto = produtoService.save(produtoNovo);
 
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
