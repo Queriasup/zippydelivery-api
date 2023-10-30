@@ -6,6 +6,7 @@ import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -25,6 +26,7 @@ import lombok.Setter;
 public class Produto extends EntidadeAuditavel {
 
    @ManyToOne
+   @JoinColumn(name = "categoria_id")   
    private CategoriaProduto categoria;
 
    @Column
