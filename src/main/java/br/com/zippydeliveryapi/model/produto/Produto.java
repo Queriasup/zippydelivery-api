@@ -26,7 +26,7 @@ import lombok.Setter;
 public class Produto extends EntidadeAuditavel {
 
    @ManyToOne
-   @JoinColumn(name = "categoria_id")   
+   @JoinColumn(name = "categoria_id")
    private CategoriaProduto categoria;
 
    @Column
