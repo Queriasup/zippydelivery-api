@@ -1,6 +1,5 @@
 package br.com.zippydeliveryapi.model.categoriaProduto;
 
-
 import org.hibernate.annotations.Where;
 
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
@@ -26,6 +25,4 @@ public class CategoriaProduto extends EntidadeAuditavel {
     @Column
     private String descricao;
 
-
-    
 }

@@ -1,8 +1,5 @@
 package br.com.zippydeliveryapi.model.produto;
 
-
-
-
 import org.hibernate.annotations.Where;
 
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
@@ -26,27 +23,23 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Produto extends EntidadeAuditavel {
-    
+
    @ManyToOne
    private CategoriaProduto categoria;
 
    @Column
-    private String titulo;
-   
+   private String titulo;
 
-    @Column
-    private String imagem;
-   
+   @Column
+   private String imagem;
 
-    @Column
-    private String descricao;
-   
-    @Column
+   @Column
+   private String descricao;
+
+   @Column
    private Double preco;
-   
+
    @Column
    private Boolean disponibilidade;
 
-    
-    
 }
