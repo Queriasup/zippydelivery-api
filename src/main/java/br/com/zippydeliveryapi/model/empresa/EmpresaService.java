@@ -36,6 +36,13 @@ public class EmpresaService {
         empresa.setTelefone(empresaAlterado.getTelefone());
         empresa.setImgPerfil(empresaAlterado.getImgPerfil());
         empresa.setImgCapa(empresaAlterado.getImgCapa());
+        empresa.setLogradouro(empresaAlterado.getLogradouro());
+        empresa.setBairro(empresaAlterado.getBairro());
+        empresa.setCidade(empresaAlterado.getCidade());
+        empresa.setEstado(empresaAlterado.getEstado());
+        empresa.setCep(empresaAlterado.getCep());
+        empresa.setComplemento(empresaAlterado.getComplemento());
+        empresa.setNumeroEndereco(empresaAlterado.getNumeroEndereco());
 
         empresa.setVersao(empresa.getVersao() + 1);
         repository.save(empresa);
