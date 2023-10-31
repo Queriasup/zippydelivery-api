@@ -68,4 +68,7 @@ public class Empresa extends EntidadeAuditavel {
     @Column
     private String complemento;
 
+    @Column
+    private String numeroEndereco;
+
 }
