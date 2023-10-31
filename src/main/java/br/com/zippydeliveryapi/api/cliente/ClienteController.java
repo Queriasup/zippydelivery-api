@@ -30,34 +30,29 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<Cliente> save(@RequestBody @Valid ClienteRequest request) {
-
         Cliente cliente = clienteService.save(request.build());
         return new ResponseEntity<Cliente>(cliente, HttpStatus.CREATED);
     }
 
     @GetMapping
     public List<Cliente> findAll() {
-
         return clienteService.findAll();
     }
 
 
     @GetMapping("/{id}")
     public Cliente findById(@PathVariable Long id) {
-
         return clienteService.findById(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Cliente> update(@PathVariable("id") Long id, @RequestBody ClienteRequest request) {
-
         clienteService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
         clienteService.delete(id);
         return ResponseEntity.ok().build();
     }

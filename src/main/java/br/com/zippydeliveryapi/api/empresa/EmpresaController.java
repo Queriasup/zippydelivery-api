@@ -31,7 +31,6 @@ public class EmpresaController {
 
     @PostMapping
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
-
         Empresa empresa = empresaService.save(request.build());
         return new ResponseEntity<Empresa>(empresa, HttpStatus.CREATED);
     }
@@ -43,20 +42,17 @@ public class EmpresaController {
 
     @GetMapping("/{id}")
     public Empresa findById(@PathVariable Long id) {
-
         return empresaService.findById(id);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Empresa> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
-
         empresaService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
         empresaService.delete(id);
         return ResponseEntity.ok().build();
     }

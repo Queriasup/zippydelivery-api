@@ -18,7 +18,6 @@ public class EmpresaService {
 
     @Transactional
     public Empresa save(Empresa empresa) {
-
         empresa.setHabilitado(Boolean.TRUE);
         empresa.setVersao(1L);
         empresa.setDataCriacao(LocalDate.now());
@@ -27,13 +26,11 @@ public class EmpresaService {
 
     @Transactional
     public void update(Long id, Empresa empresaAlterado) {
-
         Empresa empresa = repository.findById(id).get();
         empresa.setNome(empresaAlterado.getNome());
         empresa.setCnpj(empresaAlterado.getCnpj());
         empresa.setEmail(empresaAlterado.getEmail());
         empresa.setCategoria(empresaAlterado.getCategoria());
-        empresa.setHorario(empresaAlterado.getHorario());
         empresa.setTempoEntrega(empresaAlterado.getTempoEntrega());
         empresa.setTaxaFrete(empresaAlterado.getTaxaFrete());
         empresa.setTelefone(empresaAlterado.getTelefone());
@@ -44,13 +41,11 @@ public class EmpresaService {
         repository.save(empresa);
     }
 
-    public List<Empresa> findAll() {
-
-        return repository.findAll();
+    public List<Empresa> findAll() { 
+        return repository.findAll(); 
     }
 
     public Empresa findById(Long id) {
-
         Optional<Empresa> consulta = repository.findById(id);
 
         if (consulta.isPresent()) {
@@ -58,15 +53,13 @@ public class EmpresaService {
         } else {
             throw new EntidadeNaoEncontradaException("Empresa", id);
         }
-
     }
 
     @Transactional
     public void delete(Long id) {
-
         Empresa empresa = repository.findById(id).get();
-        empresa.setHabilitado(Boolean.FALSE);
 
+        empresa.setHabilitado(Boolean.FALSE);
         empresa.setVersao(empresa.getVersao() + 1);
 
         repository.save(empresa);

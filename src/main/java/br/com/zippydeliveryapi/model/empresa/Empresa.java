@@ -36,9 +36,6 @@ public class Empresa extends EntidadeAuditavel {
     private String categoria;
 
     @Column
-    private String horario;
-
-    @Column
     private Integer tempoEntrega;
 
     @Column
@@ -52,5 +49,23 @@ public class Empresa extends EntidadeAuditavel {
 
     @Column
     private String imgCapa;
+
+    @Column
+    private String logradouro;
+
+    @Column
+    private String bairro;
+
+    @Column
+    private String cidade;
+
+    @Column
+    private String estado;
+
+    @Column(nullable = false, length = 10)
+    private String cep;
+
+    @Column
+    private String complemento;
 
 }
