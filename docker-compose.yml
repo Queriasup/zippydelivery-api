@@ -13,7 +13,7 @@ services:
        - ./postgres-data:/bitnami/postgresql/data
 
 
-# MYSQL
+## MYSQL
 #version: '3'
 #services:
 #  mysql:

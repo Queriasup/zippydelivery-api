@@ -48,7 +48,6 @@ public class EmpresaRequest {
     private String cidade;
     private String estado;
     private String complemento;
-    private String numeroEndereco;
 
     public Empresa build() {
         return Empresa.builder()
@@ -67,7 +66,6 @@ public class EmpresaRequest {
                 .estado(estado)
                 .cep(cep)
                 .complemento(complemento)
-                .numeroEndereco(numeroEndereco)
                 .build();
     }
 }

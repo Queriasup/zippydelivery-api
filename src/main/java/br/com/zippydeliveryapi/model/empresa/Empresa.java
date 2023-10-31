@@ -36,6 +36,9 @@ public class Empresa extends EntidadeAuditavel {
     private String categoria;
 
     @Column
+    private String horario;
+
+    @Column
     private Integer tempoEntrega;
 
     @Column
@@ -67,8 +70,5 @@ public class Empresa extends EntidadeAuditavel {
 
     @Column
     private String complemento;
-
-    @Column
-    private String numeroEndereco;
 
 }
