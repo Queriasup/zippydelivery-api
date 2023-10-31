@@ -31,6 +31,7 @@ public class EmpresaService {
         empresa.setCnpj(empresaAlterado.getCnpj());
         empresa.setEmail(empresaAlterado.getEmail());
         empresa.setCategoria(empresaAlterado.getCategoria());
+        empresa.setHorario(empresaAlterado.getHorario());
         empresa.setTempoEntrega(empresaAlterado.getTempoEntrega());
         empresa.setTaxaFrete(empresaAlterado.getTaxaFrete());
         empresa.setTelefone(empresaAlterado.getTelefone());

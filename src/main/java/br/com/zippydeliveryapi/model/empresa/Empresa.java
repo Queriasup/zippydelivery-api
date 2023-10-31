@@ -36,6 +36,9 @@ public class Empresa extends EntidadeAuditavel {
     private String categoria;
 
     @Column
+    private String horario;
+
+    @Column
     private Integer tempoEntrega;
 
     @Column

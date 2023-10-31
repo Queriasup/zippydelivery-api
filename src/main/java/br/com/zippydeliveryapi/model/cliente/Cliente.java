@@ -25,11 +25,14 @@ public class Cliente extends EntidadeAuditavel {
     @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(unique = true)
+    @Column(unique = false)
     private String cpf;
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column
+    private String senha;
 
     @Column
     private String logradouro;
@@ -43,7 +46,7 @@ public class Cliente extends EntidadeAuditavel {
     @Column
     private String estado;
 
-    @Column(nullable = false, length = 10)
+    @Column
     private String cep;
 
     @Column

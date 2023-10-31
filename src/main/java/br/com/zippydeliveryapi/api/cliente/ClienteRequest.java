@@ -38,6 +38,7 @@ public class ClienteRequest {
    @Length(max = 10, message = "O Nome deverá ter no máximo {max} caracteres")
    private String cep;
 
+   private String senha;
    private String logradouro;
    private String bairro;
    private String cidade;
@@ -49,6 +50,7 @@ public class ClienteRequest {
             .nome(nome)
             .cpf(cpf)
             .email(email)
+            .senha(senha)
             .logradouro(logradouro)
             .bairro(bairro)
             .cidade(cidade)
