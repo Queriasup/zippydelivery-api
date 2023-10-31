@@ -65,6 +65,8 @@ public class ClienteService {
         Cliente cliente = repository.findById(id).get();
         cliente.setHabilitado(Boolean.FALSE);
         cliente.setVersao(cliente.getVersao() + 1);
+        cliente.setCpf("");
+        cliente.setEmail("");
 
         repository.save(cliente);
     }
