@@ -46,7 +46,7 @@ public class Cliente extends EntidadeAuditavel {
     @Column
     private String estado;
 
-    @Column(nullable = false, length = 10)
+    @Column(length = 10)
     private String cep;
 
     @Column
