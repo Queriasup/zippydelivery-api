@@ -13,7 +13,7 @@ services:
        - ./postgres-data:/bitnami/postgresql/data
 
 
-#MYSQL
+# MYSQL
 #version: '3'
 #services:
 #  mysql:
@@ -22,7 +22,5 @@ services:
 #    environment:
 #      MYSQL_ROOT_PASSWORD: 12345678
 #      MYSQL_DATABASE: zippydelivery
-#      MYSQL_USER: root
-#      MYSQL_PASSWORD: 12345678
 #    ports:
-#      - "5435:3306"
+#      - "5435:3306"#
