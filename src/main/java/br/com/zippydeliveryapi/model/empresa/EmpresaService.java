@@ -28,7 +28,6 @@ public class EmpresaService {
     public void update(Long id, Empresa empresaAlterado) {
         Empresa empresa = repository.findById(id).get();
         empresa.setNome(empresaAlterado.getNome());
-        empresa.setCnpj(empresaAlterado.getCnpj());
         empresa.setEmail(empresaAlterado.getEmail());
         empresa.setCategoria(empresaAlterado.getCategoria());
         empresa.setTempoEntrega(empresaAlterado.getTempoEntrega());
@@ -36,6 +35,13 @@ public class EmpresaService {
         empresa.setTelefone(empresaAlterado.getTelefone());
         empresa.setImgPerfil(empresaAlterado.getImgPerfil());
         empresa.setImgCapa(empresaAlterado.getImgCapa());
+        empresa.setNumeroEndereco(empresaAlterado.getNumeroEndereco());
+        empresa.setBairro(empresaAlterado.getBairro());
+        empresa.setCidade(empresaAlterado.getCidade());
+        empresa.setComplemento(empresaAlterado.getComplemento());
+        empresa.setLogradouro(empresaAlterado.getLogradouro());
+        empresa.setEstado(empresaAlterado.getEstado());
+        empresa.setCep(empresaAlterado.getCep());
 
         empresa.setVersao(empresa.getVersao() + 1);
         repository.save(empresa);
@@ -61,6 +67,9 @@ public class EmpresaService {
 
         empresa.setHabilitado(Boolean.FALSE);
         empresa.setVersao(empresa.getVersao() + 1);
+        empresa.setCnpj("");
+        empresa.setEmail("");
+        empresa.setTelefone("");
 
         repository.save(empresa);
     }

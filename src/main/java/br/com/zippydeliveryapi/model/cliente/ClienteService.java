@@ -64,9 +64,9 @@ public class ClienteService {
     public void delete(Long id) {
         Cliente cliente = repository.findById(id).get();
         cliente.setHabilitado(Boolean.FALSE);
+        cliente.setVersao(cliente.getVersao() + 1);
         cliente.setCpf("");
         cliente.setEmail("");
-        cliente.setVersao(cliente.getVersao() + 1);
 
         repository.save(cliente);
     }

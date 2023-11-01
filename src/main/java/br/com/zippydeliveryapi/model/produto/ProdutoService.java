@@ -19,11 +19,12 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    @Transactional
+    @jakarta.transaction.Transactional
     public Produto save(Produto produto) {
-        if(produto.getDisponibilidade() == false){
+        if (produto.getDisponibilidade() == false) {
             throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
         }
+
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
         produto.setDataCriacao(LocalDate.now());
@@ -31,6 +32,7 @@ public class ProdutoService {
     }
 
     public List<Produto> findAll() {
+
         return repository.findAll();
     }
 
@@ -39,9 +41,9 @@ public class ProdutoService {
     }
 
     @Transactional
-    public Produto update(Long id, Produto produtoAlterado) {
-        Produto produto = repository.findById(id).get();
+    public void update(Long id, Produto produtoAlterado) {
 
+        Produto produto = repository.findById(id).get();
         produto.setCategoria(produtoAlterado.getCategoria());
         produto.setDescricao(produtoAlterado.getDescricao());
         produto.setTitulo(produtoAlterado.getTitulo());
@@ -49,14 +51,12 @@ public class ProdutoService {
         produto.setPreco(produtoAlterado.getPreco());
         produto.setDisponibilidade(produtoAlterado.getDisponibilidade());
         produto.setVersao(produto.getVersao() + 1);
-
-        return repository.save(produto);
+        repository.save(produto);
     }
 
     @Transactional
     public void delete(Long id) {
         Produto produto = repository.findById(id).get();
-
         produto.setHabilitado(Boolean.FALSE);
         produto.setVersao(produto.getVersao() + 1);
 
@@ -71,7 +71,9 @@ public class ProdutoService {
             CategoriaProduto categoria = (CategoriaProduto) resultado[0];
             Object produto = resultado[1];
 
-            categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
+            if (produto != null) {
+                categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
+            }
         }
 
         return new ArrayList<>(categoriasMap.values());

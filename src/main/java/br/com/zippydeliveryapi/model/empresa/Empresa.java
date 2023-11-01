@@ -41,7 +41,7 @@ public class Empresa extends EntidadeAuditavel {
     @Column
     private Double taxaFrete;
 
-    @Column(nullable = false, unique = true)
+    @Column
     private String telefone;
 
     @Column
@@ -67,5 +67,8 @@ public class Empresa extends EntidadeAuditavel {
 
     @Column
     private String complemento;
+
+    @Column
+    private String numeroEndereco;
 
 }
