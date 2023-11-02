@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
-import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import jakarta.validation.Valid;
@@ -32,15 +31,10 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @Autowired
-    private EmpresaService empresaService;
-
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produtoNovo = request.build();
-
         produtoNovo.setCategoria(categoriaProdutoService.findById(request.getIdCategoria()));
-        produtoNovo.setEmpresa(empresaService.findById(request.getIdEmpresa()));
         Produto produto = produtoService.save(produtoNovo);
 
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
@@ -58,13 +52,10 @@ public class ProdutoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
-        Produto produtoNovo = request.build();
+        Produto produto = request.build();
+        produtoService.update(id, produto);
 
-        produtoNovo.setId(id);
-        produtoNovo.setCategoria(categoriaProdutoService.findById(request.getIdCategoria()));
-        produtoService.update(id, produtoNovo);
-
-        return new ResponseEntity<Produto>(produtoNovo, HttpStatus.OK);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
@@ -73,8 +64,8 @@ public class ProdutoController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/filtrar")
-    public List<List<Object>> produtosPorCategoria() {
+    @GetMapping("/porcategoria")
+    public List<List<Object>> agruparPorCategoria() {
         return produtoService.agruparPorCategoria();
     }
 

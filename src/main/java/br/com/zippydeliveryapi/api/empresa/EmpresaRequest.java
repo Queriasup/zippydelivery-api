@@ -34,7 +34,7 @@ public class EmpresaRequest {
 
     @NotNull(message = "O CEP é de preenchimento obrigatório")
     @NotBlank(message = "O CEP é de preenchimento obrigatório")
-    @Length(max = 10, message = "O Nome deverá ter no máximo {max} caracteres")
+    @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
     private String cep;
 
     private String categoria;

@@ -33,11 +33,10 @@ public class ClienteRequest {
    @Email
    private String email;
 
-   @NotNull(message = "O CEP é de preenchimento obrigatório")
-   @NotBlank(message = "O CEP é de preenchimento obrigatório")
-   @Length(max = 10, message = "O Nome deverá ter no máximo {max} caracteres")
+   @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
    private String cep;
 
+   private String senha;
    private String logradouro;
    private String bairro;
    private String cidade;
@@ -49,6 +48,7 @@ public class ClienteRequest {
             .nome(nome)
             .cpf(cpf)
             .email(email)
+            .senha(senha)
             .logradouro(logradouro)
             .bairro(bairro)
             .cidade(cidade)
