@@ -22,13 +22,13 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
 
-    @Column(nullable = false, length = 100)
+  //  @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(unique = false)
+    //@Column(unique = false)
     private String cpf;
 
-    @Column(nullable = false, unique = true)
+   // @Column(nullable = false, unique = true)
     private String email;
 
     @Column
@@ -46,7 +46,7 @@ public class Cliente extends EntidadeAuditavel {
     @Column
     private String estado;
 
-    @Column(length = 10)
+    @Column
     private String cep;
 
     @Column
