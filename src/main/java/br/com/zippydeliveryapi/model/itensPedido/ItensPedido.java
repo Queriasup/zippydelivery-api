@@ -4,6 +4,7 @@ package br.com.zippydeliveryapi.model.itensPedido;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.zippydeliveryapi.model.pedido.Pedido;
 import br.com.zippydeliveryapi.model.produto.Produto;
@@ -33,11 +34,13 @@ public class ItensPedido extends EntidadeAuditavel {
   
     @ManyToOne()
     @JoinColumn(name = "id_produto")
+    @JsonBackReference
     private Produto produto;
 
   
     @ManyToOne()
     @JoinColumn(name = "id_pedido")
+    @JsonBackReference
     private Pedido pedido;
 
     @Column

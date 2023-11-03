@@ -38,17 +38,18 @@ public class ItensPedidoController {
 
     @PostMapping
     public ResponseEntity<ItensPedido> save(@RequestBody @Valid ItensPedidoRequest request) {
+
         ItensPedido itemPedidoNovo = request.build();
 
+        
+        System.out.println(itemPedidoNovo);
         itemPedidoNovo.setPedido(pedidoService.findById(request.getId_pedido()));
         
         itemPedidoNovo.setProduto(produtoService.findById(request.getId_produto()));
-        
+
         ItensPedido itensPedido = itensPedidoService.save(itemPedidoNovo);
 
         return new ResponseEntity<ItensPedido>(itensPedido, HttpStatus.CREATED);
     }
-
-    
 
 }

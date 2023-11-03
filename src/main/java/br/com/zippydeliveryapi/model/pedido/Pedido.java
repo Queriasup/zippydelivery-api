@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
@@ -44,6 +46,7 @@ public class Pedido extends EntidadeAuditavel {
 
     @Column
     @OneToMany(mappedBy = "pedido")
+    @JsonManagedReference
     private Set<ItensPedido> itensPedido;
 
     @Column
