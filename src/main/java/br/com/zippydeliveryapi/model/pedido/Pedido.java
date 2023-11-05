@@ -33,12 +33,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Pedido extends EntidadeAuditavel {
 
- 
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     
+
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
@@ -63,10 +63,10 @@ public class Pedido extends EntidadeAuditavel {
     @Column
     private Double valorTotal;
 
-    @Column
+    @Column 
     private Double taxaEntrega;
 
-    
+
     @Column
     private String logradouro;
 
