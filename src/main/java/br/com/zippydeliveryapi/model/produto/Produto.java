@@ -1,6 +1,6 @@
 package br.com.zippydeliveryapi.model.produto;
 
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Set;
 
 import org.hibernate.annotations.Where;
@@ -37,9 +37,9 @@ public class Produto extends EntidadeAuditavel {
    private CategoriaProduto categoria;
 
    @Column
-    @OneToMany(mappedBy = "produto")
-    @JsonManagedReference
-    private Set<ItensPedido> itensPedido;
+   @OneToMany(mappedBy = "produto")
+   @JsonManagedReference
+   private Set<ItensPedido> itensPedido;
 
 
    @Column

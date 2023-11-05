@@ -1,7 +1,7 @@
 package br.com.zippydeliveryapi.model.pedido;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Set;
 
 import org.hibernate.annotations.Where;
