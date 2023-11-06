@@ -36,25 +36,19 @@ public class Produto extends EntidadeAuditavel {
    @JoinColumn(name = "categoria_id")
    private CategoriaProduto categoria;
 
-   @Column
-    @OneToMany(mappedBy = "produto")
-    @JsonManagedReference
-    private Set<ItensPedido> itensPedido;
-
-
-   @Column
+   @Column(nullable = false, length = 100)
    private String titulo;
 
-   @Column
+   @Column(nullable = false)
    private String imagem;
 
    @Column
    private String descricao;
 
-   @Column
+   @Column(nullable = false)
    private Double preco;
 
-   @Column
+   @Column()
    private Boolean disponibilidade;
 
 }

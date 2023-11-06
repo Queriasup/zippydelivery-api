@@ -1,7 +1,5 @@
 package br.com.zippydeliveryapi.model.itensPedido;
 
-
-
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -53,3 +51,4 @@ public class ItensPedido extends EntidadeAuditavel {
     private Double valorTotal;
 
 }
+

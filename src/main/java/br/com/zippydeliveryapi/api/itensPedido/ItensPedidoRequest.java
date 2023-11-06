@@ -1,6 +1,5 @@
 package br.com.zippydeliveryapi.api.itensPedido;
 
-
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 
 import lombok.AllArgsConstructor;
@@ -33,3 +32,4 @@ public class ItensPedidoRequest {
                .build();
    }
 }
+

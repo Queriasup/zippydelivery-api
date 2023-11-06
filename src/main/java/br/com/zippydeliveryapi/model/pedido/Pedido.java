@@ -1,8 +1,7 @@
 package br.com.zippydeliveryapi.model.pedido;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Set;
+import java.util.List;
 
 import org.hibernate.annotations.Where;
 
@@ -34,12 +33,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Pedido extends EntidadeAuditavel {
 
- 
+
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-
     
+
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
@@ -47,7 +46,7 @@ public class Pedido extends EntidadeAuditavel {
     @Column
     @OneToMany(mappedBy = "pedido")
     @JsonManagedReference
-    private Set<ItensPedido> itensPedido;
+    private List<ItensPedido> itensPedido;
 
     @Column
     private LocalDateTime dataHora;
@@ -64,10 +63,10 @@ public class Pedido extends EntidadeAuditavel {
     @Column
     private Double valorTotal;
 
-    @Column
+    @Column 
     private Double taxaEntrega;
 
-    
+
     @Column
     private String logradouro;
 
