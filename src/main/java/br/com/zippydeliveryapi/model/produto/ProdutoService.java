@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
 import br.com.zippydeliveryapi.util.exception.ProdutoException;
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 @Service
 public class ProdutoService {
@@ -19,7 +19,7 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    @jakarta.transaction.Transactional
+    @javax.transaction.Transactional
     public Produto save(Produto produto) {
         if (produto.getDisponibilidade() == false) {
             throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);

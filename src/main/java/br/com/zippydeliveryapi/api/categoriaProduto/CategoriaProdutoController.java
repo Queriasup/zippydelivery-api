@@ -2,7 +2,7 @@ package br.com.zippydeliveryapi.api.categoriaProduto;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -62,6 +62,7 @@ public class CategoriaProdutoController {
         return categoriaProdutoService.findById(id);
     }
 
+    @ApiOperation(value = "Serviço responsável por atualizar uma categoria de produto referente ao Id passado na URL.")
     @PutMapping("/{id}")
     public ResponseEntity<CategoriaProduto> update(@PathVariable("id") Long id,
             @RequestBody CategoriaProdutoRequest request) {
@@ -70,6 +71,7 @@ public class CategoriaProdutoController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Serviço responsável por deletar uma categoria de produto referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
 

@@ -4,9 +4,9 @@ package br.com.zippydeliveryapi.model.categoriaProduto;
 import org.hibernate.annotations.Where;
 
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
