@@ -21,12 +21,11 @@ public class ItensPedidoRequest {
   
     private Double valorUnitario;
  
-    private Double valorTotal;
+
 
    public ItensPedido build() {
        return ItensPedido.builder()
                .qtdProduto(qtdProduto)
-               .valorTotal(valorTotal)
                .valorUnitario(valorUnitario)           
                .build();
    }
