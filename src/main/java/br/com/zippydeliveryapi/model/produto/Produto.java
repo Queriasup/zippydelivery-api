@@ -52,7 +52,7 @@ public class Produto extends EntidadeAuditavel {
    @Column(nullable = false)
    private Double preco;
 
-   @Column()
+   @Column
    private Boolean disponibilidade;
 
 }

@@ -3,7 +3,7 @@ package br.com.zippydeliveryapi.model.categoriaProduto;
 import java.time.LocalDate;
 import java.util.List;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
