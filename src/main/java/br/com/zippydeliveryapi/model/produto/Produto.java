@@ -27,7 +27,7 @@ public class Produto extends EntidadeAuditavel {
 
    @ManyToOne
    @JoinColumn(name = "categoria_id")
-   private CategoriaProduto categoria;
+   private CategoriaProduto categoriaId;
 
    @Column
    private String titulo;
@@ -40,6 +40,9 @@ public class Produto extends EntidadeAuditavel {
 
    @Column
    private Double preco;
+
+   @Column
+   private String categoria;
 
    @Column
    private Boolean disponibilidade;

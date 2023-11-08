@@ -21,9 +21,9 @@ public class ProdutoService {
 
     @jakarta.transaction.Transactional
     public Produto save(Produto produto) {
-        if (produto.getDisponibilidade() == false) {
-            throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
-        }
+        //if (produto.getDisponibilidade() == false) {
+          //  throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
+        //}
 
         produto.setHabilitado(Boolean.TRUE);
         produto.setVersao(1L);
@@ -44,7 +44,9 @@ public class ProdutoService {
     public void update(Long id, Produto produtoAlterado) {
 
         Produto produto = repository.findById(id).get();
+        produto.setCategoriaId(produtoAlterado.getCategoriaId());
         produto.setCategoria(produtoAlterado.getCategoria());
+
         produto.setDescricao(produtoAlterado.getDescricao());
         produto.setTitulo(produtoAlterado.getTitulo());
         produto.setImagem(produtoAlterado.getImagem());
@@ -68,11 +70,11 @@ public class ProdutoService {
         Map<Long, List<Object>> categoriasMap = new HashMap<>();
 
         for (Object[] resultado : resultados) {
-            CategoriaProduto categoria = (CategoriaProduto) resultado[0];
+            CategoriaProduto categoriaId = (CategoriaProduto) resultado[0];
             Object produto = resultado[1];
 
             if (produto != null) {
-                categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
+                categoriasMap.computeIfAbsent(categoriaId.getId(), k -> new ArrayList<>()).add(produto);
             }
         }
 

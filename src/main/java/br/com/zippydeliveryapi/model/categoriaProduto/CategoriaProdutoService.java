@@ -39,7 +39,7 @@ public CategoriaProduto findById(Long id) {
 
       CategoriaProduto categoriaProduto = repository.findById(id).get();
   
-      categoriaProduto.setDescricao(categoriaProdutoAlterado.getDescricao());
+      categoriaProduto.setDescricaos(categoriaProdutoAlterado.getDescricaos());
     
       categoriaProduto.setVersao(categoriaProduto.getVersao() + 1);
       repository.save(categoriaProduto);

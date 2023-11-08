@@ -8,7 +8,7 @@ import java.util.List;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-    @Query("SELECT c AS categoria, p FROM CategoriaProduto c LEFT JOIN Produto p ON c.id = p.categoria.id")
+    @Query("SELECT c AS categoriaId, p FROM CategoriaProduto c LEFT JOIN Produto p ON c.id = p.categoriaId.id")
     List<Object[]> agruparPorCategoria();
     
 }

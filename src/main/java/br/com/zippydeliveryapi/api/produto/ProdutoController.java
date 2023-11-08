@@ -25,8 +25,8 @@ import jakarta.validation.Valid;
 @CrossOrigin
 public class ProdutoController {
 
-    @Autowired
-    private CategoriaProdutoService categoriaProdutoService;
+   // @Autowired
+   // private CategoriaProdutoService categoriaProdutoService;
 
     @Autowired
     private ProdutoService produtoService;
@@ -34,7 +34,7 @@ public class ProdutoController {
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produtoNovo = request.build();
-        produtoNovo.setCategoria(categoriaProdutoService.findById(request.getIdCategoria()));
+      //  produtoNovo.setCategoriaId(categoriaProdutoService.findById(request.getIdCategoria()));
         Produto produto = produtoService.save(produtoNovo);
 
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);

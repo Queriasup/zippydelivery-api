@@ -17,7 +17,7 @@ public class CategoriaProdutoRequest {
      public CategoriaProduto build() {
        return CategoriaProduto.builder()
               
-               .descricao(descricao)
+               .descricaos(descricao)
                
                .build();
    }
