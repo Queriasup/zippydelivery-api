@@ -1,7 +1,9 @@
 package br.com.zippydeliveryapi.api.pedido;
 
 import java.time.LocalDateTime;
-import br.com.zippydeliveryapi.model.pedido.Pedido;
+import java.util.List;
+
+import javax.validation.constraints.NotNull;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +16,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PedidoRequest {
 
+    @NotNull
+    private List<ItensPedidoRequest> itens;
     private Long id_cliente;
     private Long id_empresa;
     private LocalDateTime dataHora;
@@ -30,20 +34,4 @@ public class PedidoRequest {
     private String complemento;
     private String numeroEndereco;
 
-    public Pedido build() {
-        return Pedido.builder()
-                .dataHora(dataHora)
-                .formaPagamento(formaPagamento)
-                .statusPagamento(statusPagamento)
-                .statusPedido(statusPedido)
-                .taxaEntrega(taxaEntrega)
-                .logradouro(logradouro)
-                .bairro(bairro)
-                .cidade(cidade)
-                .estado(estado)
-                .cep(cep)
-                .complemento(complemento)
-                .numeroEndereco(numeroEndereco)
-                .build();
-    }
 }

@@ -3,13 +3,15 @@ package br.com.zippydeliveryapi.model.pedido;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -42,8 +44,8 @@ public class Pedido extends EntidadeAuditavel {
     private Empresa empresa;
 
     @Column
-    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ItensPedido> itensPedido;
 
     @Column
