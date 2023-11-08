@@ -14,8 +14,6 @@ import lombok.NoArgsConstructor;
 public class ProdutoRequest {
 
    private Long idCategoria;
-
-   
   
     private String titulo;
    

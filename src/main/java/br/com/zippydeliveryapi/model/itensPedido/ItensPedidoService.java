@@ -23,6 +23,7 @@ public class ItensPedidoService {
         itensPedido.setHabilitado(Boolean.TRUE);
         itensPedido.setVersao(1L);
         itensPedido.setDataCriacao(LocalDate.now());
+        itensPedido.setValorTotal(itensPedido.getValorUnitario() * itensPedido.getQtdProduto());
         return repository.save(itensPedido);
     }
 
@@ -37,12 +38,13 @@ public class ItensPedidoService {
 
     @Transactional
     public void update(Long id, ItensPedido itensPedidoAlterado) {
+        
 
         ItensPedido itensPedido = repository.findById(id).get();
         itensPedido.setProduto(itensPedidoAlterado.getProduto());
         itensPedido.setPedido(itensPedidoAlterado.getPedido());
-        itensPedido.setQtdProduto(itensPedido.getQtdProduto());
-        itensPedido.setValorTotal(itensPedidoAlterado.getValorTotal());
+        itensPedido.setQtdProduto(itensPedidoAlterado.getQtdProduto());
+        itensPedido.setValorTotal(itensPedidoAlterado.getValorUnitario() * itensPedidoAlterado.getQtdProduto());
         itensPedido.setValorUnitario(itensPedidoAlterado.getValorUnitario());
         
         repository.save(itensPedido);

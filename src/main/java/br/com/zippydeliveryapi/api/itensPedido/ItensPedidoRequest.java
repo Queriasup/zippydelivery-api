@@ -18,16 +18,14 @@ public class ItensPedidoRequest {
     private Long id_pedido;
 
     private Integer qtdProduto;
-
   
     private Double valorUnitario;
  
-    private Double valorTotal;
+
 
    public ItensPedido build() {
        return ItensPedido.builder()
                .qtdProduto(qtdProduto)
-               .valorTotal(valorTotal)
                .valorUnitario(valorUnitario)           
                .build();
    }
