@@ -2,14 +2,12 @@ package br.com.zippydeliveryapi.model.itensPedido;
 
 import java.time.LocalDate;
 
-
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 @Service
 public class ItensPedidoService {
@@ -17,7 +15,7 @@ public class ItensPedidoService {
     @Autowired
     private ItensPedidoRepository repository;
 
-    @jakarta.transaction.Transactional
+    @Transactional
     public ItensPedido save(ItensPedido itensPedido) {
 
         itensPedido.setHabilitado(Boolean.TRUE);
@@ -28,7 +26,6 @@ public class ItensPedidoService {
     }
 
     public List<ItensPedido> findAll() {
-
         return repository.findAll();
     }
 
@@ -38,7 +35,6 @@ public class ItensPedidoService {
 
     @Transactional
     public void update(Long id, ItensPedido itensPedidoAlterado) {
-        
 
         ItensPedido itensPedido = repository.findById(id).get();
         itensPedido.setProduto(itensPedidoAlterado.getProduto());
@@ -46,7 +42,7 @@ public class ItensPedidoService {
         itensPedido.setQtdProduto(itensPedidoAlterado.getQtdProduto());
         itensPedido.setValorTotal(itensPedidoAlterado.getValorUnitario() * itensPedidoAlterado.getQtdProduto());
         itensPedido.setValorUnitario(itensPedidoAlterado.getValorUnitario());
-        
+
         repository.save(itensPedido);
     }
 
@@ -59,5 +55,4 @@ public class ItensPedidoService {
         repository.save(itensPedido);
     }
 
-   
 }

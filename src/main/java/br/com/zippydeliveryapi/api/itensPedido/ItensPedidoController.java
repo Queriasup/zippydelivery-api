@@ -17,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoService;
-
 import br.com.zippydeliveryapi.model.pedido.PedidoService;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/itenspedido")
@@ -33,22 +32,16 @@ public class ItensPedidoController {
     @Autowired
     private ProdutoService produtoService;
 
-    
     @Autowired
     private ItensPedidoService itensPedidoService;
 
 
     @PostMapping
     public ResponseEntity<ItensPedido> save(@RequestBody @Valid ItensPedidoRequest request) {
-
         ItensPedido itemPedidoNovo = request.build();
 
-        
-        System.out.println(itemPedidoNovo);
         itemPedidoNovo.setPedido(pedidoService.findById(request.getId_pedido()));
-        
         itemPedidoNovo.setProduto(produtoService.findById(request.getId_produto()));
-
         ItensPedido itensPedido = itensPedidoService.save(itemPedidoNovo);
 
         return new ResponseEntity<ItensPedido>(itensPedido, HttpStatus.CREATED);
@@ -56,13 +49,11 @@ public class ItensPedidoController {
 
     @GetMapping
     public List<ItensPedido> findAll() {
-  
         return itensPedidoService.findAll();
     }
 
     @GetMapping("/{id}")
     public ItensPedido findById(@PathVariable Long id) {
-
         return itensPedidoService.findById(id);
     }
 
@@ -74,7 +65,6 @@ public class ItensPedidoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
        itensPedidoService.delete(id);
        return ResponseEntity.ok().build();
    }

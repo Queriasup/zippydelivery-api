@@ -14,15 +14,10 @@ import lombok.NoArgsConstructor;
 public class ItensPedidoRequest {
 
     private Long id_produto;
-
     private Long id_pedido;
-
     private Integer qtdProduto;
-  
     private Double valorUnitario;
  
-
-
    public ItensPedido build() {
        return ItensPedido.builder()
                .qtdProduto(qtdProduto)

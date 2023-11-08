@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import jakarta.transaction.Transactional;
+import javax.transaction.Transactional;
 
 @Service
 public class PedidoService {
@@ -15,7 +15,7 @@ public class PedidoService {
     @Autowired
     private PedidoRepository repository;
 
-    @jakarta.transaction.Transactional
+    @Transactional
     public Pedido save(Pedido pedido) {
 
         pedido.setHabilitado(Boolean.TRUE);
@@ -25,7 +25,6 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
-
         return repository.findAll();
     }
 
@@ -38,7 +37,8 @@ public class PedidoService {
 
         Pedido pedido = repository.findById(id).get();
         pedido.setStatusPedido(pedidoAlterado.getStatusPedido());
-        pedido.setVersao(pedidoAlterado.getVersao() + 1);
+        pedido.setVersao(pedido.getVersao() + 1);
+        
         repository.save(pedido);
     }
 
@@ -51,5 +51,4 @@ public class PedidoService {
         repository.save(pedido);
     }
 
-   
 }

@@ -51,6 +51,7 @@ public class EmpresaRequest {
     private String numeroEndereco;
 
     public Empresa build() {
+        
         return Empresa.builder()
                 .nome(nome)
                 .cnpj(cnpj)
