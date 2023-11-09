@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
-import jakarta.validation.Valid;
+import javax.validation.Valid;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("/api/produto")
@@ -31,6 +35,7 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @ApiOperation(value = "Serviço responsável por salvar um produto no sistema.")
     @PostMapping
     public ResponseEntity<Produto> save(@RequestBody @Valid ProdutoRequest request) {
         Produto produtoNovo = request.build();
@@ -40,16 +45,26 @@ public class ProdutoController {
         return new ResponseEntity<Produto>(produto, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "Serviço responsável por listar todas os produto do sistema.")
     @GetMapping
     public List<Produto> findAll() {
         return produtoService.findAll();
     }
 
+    @ApiOperation(value = "Serviço responsável por obter um produto referente ao Id passado na URL.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Retorna  o produto."),
+            @ApiResponse(code = 401, message = "Acesso não autorizado."),
+            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso."),
+            @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
+            @ApiResponse(code = 500, message = "Foi gerado um erro no servidor."),
+    })
     @GetMapping("/{id}")
     public Produto findById(@PathVariable Long id) {
         return produtoService.findById(id);
     }
 
+    @ApiOperation(value = "Serviço responsável por atualizar um produto referente ao Id passado na URL.")
     @PutMapping("/{id}")
     public ResponseEntity<Produto> update(@PathVariable("id") Long id, @RequestBody ProdutoRequest request) {
         Produto produto = request.build();
@@ -58,12 +73,14 @@ public class ProdutoController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Serviço responsável por deletar um produto referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         produtoService.delete(id);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Serviço responsável por listar produtos de uma mesma categoria.")
     @GetMapping("/porcategoria")
     public List<List<Object>> agruparPorCategoria() {
         return produtoService.agruparPorCategoria();

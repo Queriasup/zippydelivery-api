@@ -1,8 +1,8 @@
 package br.com.zippydeliveryapi.model.empresa;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
@@ -23,10 +23,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Empresa extends EntidadeAuditavel {
 
-    @Column(nullable = false, length = 100)
+ //   @Column(nullable = false, length = 100)
     private String nome;
 
-    @Column(unique = true)
+  //  @Column(unique = true)
     private String cnpj;
 
     @Column(nullable = false, unique = true)
@@ -62,7 +62,7 @@ public class Empresa extends EntidadeAuditavel {
     @Column
     private String estado;
 
-    @Column(nullable = false, length = 10)
+  //  @Column(nullable = false, length = 10)
     private String cep;
 
     @Column
