@@ -2,6 +2,7 @@ package br.com.zippydeliveryapi.api.empresa;
 
 import org.hibernate.validator.constraints.Length;
 
+import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -45,10 +46,13 @@ public class EmpresaRequest {
     private String imgCapa;
     private String logradouro;
     private String bairro;
+    private String perfil;
     private String cidade;
     private String estado;
     private String complemento;
     private String numeroEndereco;
+
+    private String password;
 
     public Empresa build() {
         
@@ -56,6 +60,7 @@ public class EmpresaRequest {
                 .nome(nome)
                 .cnpj(cnpj)
                 .email(email)
+                .usuario(buildUsuario())
                 .categoria(categoria)
                 .tempoEntrega(tempoEntrega)
                 .taxaFrete(taxaFrete)
@@ -71,4 +76,12 @@ public class EmpresaRequest {
                 .numeroEndereco(numeroEndereco)
                 .build();
     }
+     public Usuario buildUsuario() {
+	
+	return Usuario.builder()
+		.username(email)
+		.password(password)
+		.build();
+    }
+
 }
