@@ -1,20 +1,15 @@
 package br.com.zippydeliveryapi.model.produto;
 
-import java.util.Set;
-
 import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
-import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,11 +30,6 @@ public class Produto extends EntidadeAuditavel {
    @JoinColumn(name = "categoria_id")
    private CategoriaProduto categoria;
 
-   @Column
-   @OneToMany(mappedBy = "produto")
-   @JsonManagedReference
-   private Set<ItensPedido> itensPedido;
-
    @Column(nullable = false, length = 100)
    private String titulo;
 
@@ -52,7 +42,7 @@ public class Produto extends EntidadeAuditavel {
    @Column(nullable = false)
    private Double preco;
 
-   @Column()
+   @Column
    private Boolean disponibilidade;
 
 }

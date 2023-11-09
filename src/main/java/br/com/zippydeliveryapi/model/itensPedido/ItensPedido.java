@@ -1,18 +1,19 @@
 package br.com.zippydeliveryapi.model.itensPedido;
 
 import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import br.com.zippydeliveryapi.model.pedido.Pedido;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
-import jakarta.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,18 +28,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItensPedido extends EntidadeAuditavel {
+public class ItensPedido extends EntidadeAuditavel implements Serializable {
 
-  
-    @ManyToOne()
-    @JoinColumn(name = "id_produto")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(nullable = false)
     private Produto produto;
-
   
-    @ManyToOne()
-    @JoinColumn(name = "id_pedido")
-    @JsonBackReference
+    @ManyToOne
+    @JoinColumn
+    @JsonIgnore
     private Pedido pedido;
 
     @Column

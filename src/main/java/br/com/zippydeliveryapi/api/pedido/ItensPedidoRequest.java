@@ -1,6 +1,4 @@
-package br.com.zippydeliveryapi.api.itensPedido;
-
-import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
+package br.com.zippydeliveryapi.api.pedido;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,20 +12,9 @@ import lombok.NoArgsConstructor;
 public class ItensPedidoRequest {
 
     private Long id_produto;
-
     private Long id_pedido;
-
     private Integer qtdProduto;
-  
     private Double valorUnitario;
  
-
-
-   public ItensPedido build() {
-       return ItensPedido.builder()
-               .qtdProduto(qtdProduto)
-               .valorUnitario(valorUnitario)           
-               .build();
-   }
 }
 

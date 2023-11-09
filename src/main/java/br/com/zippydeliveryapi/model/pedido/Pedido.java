@@ -3,20 +3,22 @@ package br.com.zippydeliveryapi.model.pedido;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,31 +35,29 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Pedido extends EntidadeAuditavel {
 
-
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    
 
     @ManyToOne
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
     @Column
-    @OneToMany(mappedBy = "pedido")
-    @JsonManagedReference
+    @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
+    @Fetch(FetchMode.SUBSELECT)
     private List<ItensPedido> itensPedido;
 
     @Column
     private LocalDateTime dataHora;
 
-    @Column()
+    @Column
     private String formaPagamento;
 
-    @Column()
+    @Column
     private String statusPedido;
 
-    @Column()
+    @Column
     private String statusPagamento;
 
     @Column
@@ -65,7 +65,6 @@ public class Pedido extends EntidadeAuditavel {
 
     @Column 
     private Double taxaEntrega;
-
 
     @Column
     private String logradouro;

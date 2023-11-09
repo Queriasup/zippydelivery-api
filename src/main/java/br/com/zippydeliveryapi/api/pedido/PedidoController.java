@@ -1,7 +1,7 @@
 package br.com.zippydeliveryapi.api.pedido;
 
+import java.util.ArrayList;
 import java.util.List;
-
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,49 +17,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.cliente.ClienteService;
-
+import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
-
-import br.com.zippydeliveryapi.model.pedido.Pedido;
+import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.pedido.PedidoService;
-
-
-
-import jakarta.validation.Valid;
+import br.com.zippydeliveryapi.model.produto.Produto;
+import br.com.zippydeliveryapi.model.produto.ProdutoService;
+import br.com.zippydeliveryapi.model.pedido.Pedido;
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pedido")
 @CrossOrigin
 public class PedidoController {
-
-    @GetMapping
-    public List<Pedido>findAll(){
-
-        return pedidoService.findAll();
-    }
-
-    @GetMapping("/{id}")
-    public Pedido findById(@PathVariable Long id){
-
-        return pedidoService.findById(id);
-
-
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Pedido>update(@PathVariable("id") Long id, @RequestBody PedidoRequest request){
-        pedidoService.update(id, request.build());
-        return ResponseEntity.ok().build();
-
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long Id){
-
-        pedidoService.delete(Id);
-        return ResponseEntity.ok().build();
-    }
-
 
     @Autowired
     private PedidoService pedidoService;
@@ -70,19 +40,83 @@ public class PedidoController {
     @Autowired
     private EmpresaService empresaService;
 
+    
+    @Autowired
+    private ProdutoService produtoService;
+
+    @GetMapping
+    public List<Pedido>findAll(){
+        return pedidoService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public Pedido findById(@PathVariable Long id){
+        return pedidoService.findById(id);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Pedido>update(@PathVariable("id") Long id, @RequestBody PedidoRequest request){
+        pedidoService.update(id, request.getStatusPagamento(), request.getStatusPedido());
+        return ResponseEntity.ok().build();
+
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long Id){
+        pedidoService.delete(Id);
+        return ResponseEntity.ok().build();
+    }
+
+    private List<ItensPedido> criarListaItensPedidos(List<ItensPedidoRequest> requestItensPedido){
+
+        List<ItensPedido> itens = new ArrayList<ItensPedido>();
+
+        for (ItensPedidoRequest itensPedidoRequest : requestItensPedido) {
+
+            Produto produto = produtoService.findById(itensPedidoRequest.getId_produto());
+
+            ItensPedido item = ItensPedido.builder()
+            .produto(produto)
+            .qtdProduto(itensPedidoRequest.getQtdProduto())
+            .valorUnitario(itensPedidoRequest.getValorUnitario()) 
+            .valorTotal(itensPedidoRequest.getValorUnitario() * itensPedidoRequest.getQtdProduto())
+            .build();
+
+            itens.add(item);
+            
+        }
+        return itens;
+    }
+
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody @Valid PedidoRequest request) {
-        Pedido pedidoNovo = request.build();
-        System.out.println(request);
-        pedidoNovo.setCliente(clienteService.findById(request.getId_cliente()));
-        
-        pedidoNovo.setEmpresa(empresaService.findById(request.getId_empresa()));
+
+        Empresa empresa = empresaService.findById(request.getId_empresa());
+
+
+        Pedido pedidoNovo = Pedido.builder()
+        .empresa(empresa)
+                .dataHora(request.getDataHora())
+                .formaPagamento(request.getFormaPagamento())
+                .statusPagamento(request.getStatusPagamento())
+                .statusPedido(request.getStatusPedido())
+                .taxaEntrega(request.getTaxaEntrega())
+                .logradouro(request.getLogradouro())
+                .bairro(request.getBairro())
+                .cidade(request.getCidade())
+                .estado(request.getEstado())
+                .cep(request.getCep())
+                .complemento(request.getComplemento())
+                .numeroEndereco(request.getNumeroEndereco())
+                .cliente(clienteService.findById(request.getId_cliente()))
+                .itensPedido(criarListaItensPedidos(request.getItens()))
+                .build();
+    
         Pedido pedido = pedidoService.save(pedidoNovo);
 
         return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
     }
 
-    
 
 }
 

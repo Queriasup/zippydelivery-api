@@ -4,9 +4,9 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.zippydeliveryapi.model.cliente.Cliente;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -33,8 +33,6 @@ public class ClienteRequest {
    @Email
    private String email;
 
-   @NotNull(message = "O CEP é de preenchimento obrigatório")
-   @NotBlank(message = "O CEP é de preenchimento obrigatório")
    @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
    private String cep;
 
