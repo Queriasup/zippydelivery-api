@@ -41,6 +41,7 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
    public static final String ROLE_CLIENTE = "CLIENTE"; //Realizar compras no sistema
    public static final String ROLE_EMPRESA = "EMPRESA";  //READ, DELETE, WRITE, UPDATE.
    public static final String ROLE_EMPRESA_USER = "EMPRESA_USER"; //READ, WRITE, UPDATE.
+    public static final String ROLE_EMPRESA_ADMIN = "EMPRESA_USER"; //READ, WRITE, UPDATE.
 
    @Column(nullable = false, unique = true)
    private String username;

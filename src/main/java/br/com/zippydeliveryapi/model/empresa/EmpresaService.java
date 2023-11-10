@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.zippydeliveryapi.model.acesso.UsuarioService;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 import javax.transaction.Transactional;
 
@@ -16,8 +17,16 @@ public class EmpresaService {
     @Autowired
     private EmpresaRepository repository;
 
+    @Autowired
+    private UsuarioService usuarioService;
+
+
     @Transactional
     public Empresa save(Empresa empresa) {
+
+        usuarioService.save(empresa.getUsuario());
+
+
         empresa.setHabilitado(Boolean.TRUE);
         empresa.setVersao(1L);
         empresa.setDataCriacao(LocalDate.now());

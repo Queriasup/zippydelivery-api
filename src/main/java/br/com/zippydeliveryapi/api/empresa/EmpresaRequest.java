@@ -37,7 +37,7 @@ public class EmpresaRequest {
     @NotBlank(message = "O CEP é de preenchimento obrigatório")
     @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
     private String cep;
-
+ 
     private String categoria;
     private Integer tempoEntrega;
     private Double taxaFrete;
@@ -52,7 +52,7 @@ public class EmpresaRequest {
     private String complemento;
     private String numeroEndereco;
 
-    private String password;
+    private String senha;
 
     public Empresa build() {
         
@@ -80,7 +80,7 @@ public class EmpresaRequest {
 	
 	return Usuario.builder()
 		.username(email)
-		.password(password)
+		.password(senha)
 		.build();
     }
 

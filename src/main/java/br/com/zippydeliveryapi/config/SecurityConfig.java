@@ -60,27 +60,37 @@ public class SecurityConfig {
                 .build();
     }
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+  
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	
+    http
+ 	.httpBasic().disable().csrf().disable().cors().and().sessionManagement()
+ 	.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
+ 	.authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
 
-        http
-                .httpBasic().disable().csrf().disable().cors().and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().exceptionHandling()
-                .authenticationEntryPoint(authenticationEntryPoint).and().authorizeRequests()
+ 	.antMatchers(AUTH_WHITELIST).permitAll()
+ 	.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+	 	
+ 	.antMatchers(HttpMethod.POST, "/api/cliente").permitAll() //Libera o cadastro de cliente para o cadastro de usuário
+ 	.antMatchers(HttpMethod.POST, "/api/empresa").permitAll() //Libera o cadastro de empresa para o cadastro de usuário
+        
+ 	//Configuração de autorizações de acesso para Produto
+	 	
+ 	.antMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Cadastro de produto
+          .antMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Alteração de produto
+          .antMatchers(HttpMethod.DELETE, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA) //Exclusão de produto
+          .antMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Consulta de produto
 
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                
-                .antMatchers(HttpMethod.POST, "/api/cliente").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/login").permitAll()
+	 	
+       	.anyRequest().hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA_ADMIN, Usuario.ROLE_EMPRESA_USER)
+        	.and().addFilterBefore(
+        		new JwtTokenAuthenticationFilter(jwtTokenProvider),
+        		UsernamePasswordAuthenticationFilter.class);
+	 
+    return http.build();
+}
 
-                .anyRequest()
-                .hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_CLIENTE)
-                .and().addFilterBefore(
-                        new JwtTokenAuthenticationFilter(jwtTokenProvider),
-                        UsernamePasswordAuthenticationFilter.class);
-
-        return http.build();
-    }
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
