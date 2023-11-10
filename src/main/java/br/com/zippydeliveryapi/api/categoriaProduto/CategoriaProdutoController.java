@@ -35,16 +35,15 @@ public class CategoriaProdutoController {
     @ApiOperation(value = "Serviço responsável por salvar uma categoria de produto no sistema.")
     @PostMapping
     public ResponseEntity<CategoriaProduto> save(@RequestBody @Valid CategoriaProdutoRequest request) {
-
         CategoriaProduto categoriaProduto = request.build();
         CategoriaProduto categoriaProdutoNova = categoriaProdutoService.save(categoriaProduto);
+
         return new ResponseEntity<CategoriaProduto>(categoriaProdutoNova, HttpStatus.CREATED);
     }
 
     @ApiOperation(value = "Serviço responsável por listar todas as categorias de produto do sistema.")
     @GetMapping
     public List<CategoriaProduto> findAll() {
-
         return categoriaProdutoService.findAll();
     }
 
@@ -58,15 +57,12 @@ public class CategoriaProdutoController {
     })
     @GetMapping("/{id}")
     public CategoriaProduto findById(@PathVariable Long id) {
-
         return categoriaProdutoService.findById(id);
     }
 
     @ApiOperation(value = "Serviço responsável por atualizar uma categoria de produto referente ao Id passado na URL.")
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaProduto> update(@PathVariable("id") Long id,
-            @RequestBody CategoriaProdutoRequest request) {
-
+    public ResponseEntity<CategoriaProduto> update(@PathVariable("id") Long id, @RequestBody CategoriaProdutoRequest request) {
         categoriaProdutoService.update(id, request.build());
         return ResponseEntity.ok().build();
     }
@@ -74,7 +70,6 @@ public class CategoriaProdutoController {
     @ApiOperation(value = "Serviço responsável por deletar uma categoria de produto referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
         categoriaProdutoService.delete(id);
         return ResponseEntity.ok().build();
     }
