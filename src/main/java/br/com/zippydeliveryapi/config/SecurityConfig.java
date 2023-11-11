@@ -77,13 +77,15 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         
  	//Configuração de autorizações de acesso para Produto
 	 	
- 	.antMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Cadastro de produto
-          .antMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Alteração de produto
+ 	.antMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(Usuario.ROLE_EMPRESA) //Cadastro de produto
+          .antMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA) //Alteração de produto
           .antMatchers(HttpMethod.DELETE, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA) //Exclusão de produto
-          .antMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA_USER) //Consulta de produto
+          .antMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA) //Consulta de produto
+          
+          .antMatchers(HttpMethod.GET, "/api/empresa/").hasAnyAuthority(Usuario.ROLE_EMPRESA) //Consulta de produto
 
 	 	
-       	.anyRequest().hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA_ADMIN, Usuario.ROLE_EMPRESA_USER)
+       	.anyRequest().hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA)
         	.and().addFilterBefore(
         		new JwtTokenAuthenticationFilter(jwtTokenProvider),
         		UsernamePasswordAuthenticationFilter.class);

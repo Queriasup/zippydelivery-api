@@ -4,6 +4,9 @@ import org.hibernate.validator.constraints.Length;
 
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
+
+import java.util.Arrays;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -79,6 +82,8 @@ public class EmpresaRequest {
      public Usuario buildUsuario() {
 	
 	return Usuario.builder()
+    
+        .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
 		.username(email)
 		.password(senha)
 		.build();

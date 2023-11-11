@@ -39,13 +39,21 @@ public class EmpresaController {
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
         // slide 31
         Empresa empresa = request.build();
-        if (request.getPerfil() != null && !"".equals(request.getPerfil())) {
-            if (request.getPerfil().equals("Usuario")) {
-                empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA_USER);
-            } else if (request.getPerfil().equals("Admin")) {
-                empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
-            }
-        }
+        
+        // System.out.println(request.getPerfil());
+
+        // if(request.getPerfil() == null) {
+        //     empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
+        // } else { 
+        //     if (request.getPerfil() != null && !"".equals(request.getPerfil())) {
+        //     if (request.getPerfil().equals("Usuario")) {
+        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA_USER);
+        //     } else if (request.getPerfil().equals("Admin")) {
+        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
+        //     }
+        // }
+        // }
+        
 
          Empresa empresaCriada = empresaService.save(empresa);
         return new ResponseEntity<Empresa>(empresaCriada, HttpStatus.CREATED);

@@ -25,8 +25,7 @@ public class EmpresaService {
     public Empresa save(Empresa empresa) {
 
         usuarioService.save(empresa.getUsuario());
-
-
+        
         empresa.setHabilitado(Boolean.TRUE);
         empresa.setVersao(1L);
         empresa.setDataCriacao(LocalDate.now());

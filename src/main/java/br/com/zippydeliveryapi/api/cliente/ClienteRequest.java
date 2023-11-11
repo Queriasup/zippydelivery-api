@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.br.CPF;
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.cliente.Cliente;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
