@@ -40,6 +40,7 @@ public class Usuario extends EntidadeNegocio implements UserDetails {
    private static final long serialVersionUID = -2660334839251150243L;
    public static final String ROLE_CLIENTE = "CLIENTE"; //Realizar compras no sistema
    public static final String ROLE_EMPRESA = "EMPRESA";  //READ, DELETE, WRITE, UPDATE.
+   public static final String ROLE_ADMIN = "ADMIN";  //READ, DELETE, WRITE, UPDATE.
 
    @Column(nullable = false, unique = true)
    private String username;
