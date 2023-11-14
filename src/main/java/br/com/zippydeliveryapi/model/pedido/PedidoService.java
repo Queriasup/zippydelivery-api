@@ -50,6 +50,7 @@ public class PedidoService {
 
         for (ItensPedido item : itens) {
             item.setPedido(pedidoSalvo);
+            item.setHabilitado(true);
             itensPedidoRepository.saveAndFlush(item);
         }
         pedidoSalvo.setItensPedido(itens);
@@ -58,7 +59,15 @@ public class PedidoService {
 
     public List<Pedido> findAll() {
 
-        return repository.findAll();
+        List<Pedido> pedidos = repository.findAll();
+
+        // for (Pedido pedido : pedidos) {
+        //     List<ItensPedido> itensPedido = itensPedidoRepository.findByidPedido(pedido.getId());
+        //     pedido.setItensPedido(itensPedido);
+           
+        // }
+
+        return  pedidos;
 
     }
 
