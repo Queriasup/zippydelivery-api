@@ -62,8 +62,8 @@ public class PedidoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long Id){
-        pedidoService.delete(Id);
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        pedidoService.delete(id);
         return ResponseEntity.ok().build();
     }
 

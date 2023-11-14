@@ -44,11 +44,13 @@ public class PedidoService {
         novoPedido.setDataHora(LocalDateTime.now());
         novoPedido.setStatusPagamento("Em aberto");
         novoPedido.setValorTotal(this.calcularValorTotalPedido(itens));
+        novoPedido.setHabilitado(true);
 
         Pedido pedidoSalvo = repository.saveAndFlush(novoPedido);
 
         for (ItensPedido item : itens) {
             item.setPedido(pedidoSalvo);
+            item.setHabilitado(true);
             itensPedidoRepository.saveAndFlush(item);
         }
         pedidoSalvo.setItensPedido(itens);
