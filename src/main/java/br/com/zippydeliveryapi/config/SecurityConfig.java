@@ -98,9 +98,9 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
           .antMatchers(HttpMethod.GET, "/api/cliente/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
           
 
- 	      .antMatchers(HttpMethod.POST, "/api/pedido").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
-          .antMatchers(HttpMethod.PUT, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
+ 	      .antMatchers(HttpMethod.POST, "/api/pedido").hasAnyAuthority(Usuario.ROLE_CLIENTE,Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
+          .antMatchers(HttpMethod.PUT, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_CLIENTE,Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
+          .antMatchers(HttpMethod.DELETE, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
           .antMatchers(HttpMethod.GET, "/api/pedido/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
           
           
