@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.zippydeliveryapi.model.acesso.UsuarioService;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 
 
@@ -19,14 +18,9 @@ public class ClienteService {
     @Autowired
     private ClienteRepository repository;
 
-    @Autowired
-private UsuarioService usuarioService;
-
     
     @Transactional
     public Cliente save(Cliente cliente) {
-        usuarioService.save(cliente.getUsuario());
-
         cliente.setHabilitado(Boolean.TRUE);
         cliente.setVersao(1L);
         cliente.setDataCriacao(LocalDate.now());
