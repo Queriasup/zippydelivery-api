@@ -44,6 +44,7 @@ public class PedidoService {
         novoPedido.setDataHora(LocalDateTime.now());
         novoPedido.setStatusPagamento("Em aberto");
         novoPedido.setValorTotal(this.calcularValorTotalPedido(itens));
+        novoPedido.setHabilitado(true);
 
         Pedido pedidoSalvo = repository.saveAndFlush(novoPedido);
 
@@ -56,11 +57,15 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
+
         return repository.findAll();
+
     }
 
     public Pedido findById(Long id) {
+        
         return repository.findById(id).get();
+        
     }
 
     @Transactional
