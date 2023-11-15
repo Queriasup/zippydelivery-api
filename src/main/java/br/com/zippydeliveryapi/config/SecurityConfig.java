@@ -16,15 +16,11 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import br.com.zippydeliveryapi.model.acesso.Usuario;
-//import br.com.ifpe.oxefood.modelo.acesso.Usuario;
 import br.com.zippydeliveryapi.model.acesso.UsuarioService;
-//import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
 import br.com.zippydeliveryapi.segurança.jwt.JwtAuthenticationEntryPoint;
-//import br.com.ifpe.oxefood.seguranca.jwt.JwtAuthenticationEntryPoint;
 import br.com.zippydeliveryapi.segurança.jwt.JwtTokenAuthenticationFilter;
-//import br.com.ifpe.oxefood.seguranca.jwt.JwtTokenAuthenticationFilter;
 import br.com.zippydeliveryapi.segurança.jwt.JwtTokenProvider;
-//import br.com.ifpe.oxefood.seguranca.jwt.JwtTokenProvider;
+
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
@@ -75,41 +71,58 @@ public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
  	.antMatchers(HttpMethod.POST, "/api/cliente").permitAll() //Libera o cadastro de cliente para o cadastro de usuário
  	.antMatchers(HttpMethod.POST, "/api/empresa").permitAll() //Libera o cadastro de empresa para o cadastro de usuário
         
- 	//Configuração de autorizações de acesso para Produto
+    //.antMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
+    //.antMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
+    //.antMatchers(HttpMethod.DELETE, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
+    //.antMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
+    
+    //.antMatchers(HttpMethod.GET, "/api/empresa").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Consulta de produto
+    //.antMatchers(HttpMethod.PUT, "/api/empresa/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
+    //.antMatchers(HttpMethod.DELETE, "/api/empresa/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
+
+    //.antMatchers(HttpMethod.POST, "/api/categoriaproduto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
+    //.antMatchers(HttpMethod.PUT, "/api/categoriaproduto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
+    //.antMatchers(HttpMethod.DELETE, "/api/categoriaproduto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
+    //.antMatchers(HttpMethod.GET, "/api/categoriaproduto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
+    
+    //.antMatchers(HttpMethod.PUT, "/api/cliente/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Alteração de produto
+    //.antMatchers(HttpMethod.DELETE, "/api/cliente/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Exclusão de produto
+    //.antMatchers(HttpMethod.GET, "/api/cliente/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
+    
+    //.antMatchers(HttpMethod.POST, "/api/pedido").hasAnyAuthority(Usuario.ROLE_CLIENTE,Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
+    //.antMatchers(HttpMethod.PUT, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_CLIENTE,Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
+    //.antMatchers(HttpMethod.DELETE, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
+    //.antMatchers(HttpMethod.GET, "/api/pedido/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
+    
+
+    .antMatchers(HttpMethod.POST, "/api/produto").permitAll()
+    .antMatchers(HttpMethod.PUT, "/api/produto/*").permitAll()
+    .antMatchers(HttpMethod.DELETE, "/api/produto/*").permitAll()
+    .antMatchers(HttpMethod.GET, "/api/produto/").permitAll()
+        
+    .antMatchers(HttpMethod.GET, "/api/empresa").permitAll()
+    .antMatchers(HttpMethod.PUT, "/api/empresa/*").permitAll()
+    .antMatchers(HttpMethod.DELETE, "/api/empresa/*").permitAll()
+    
+    .antMatchers(HttpMethod.POST, "/api/categoriaproduto").permitAll()
+    .antMatchers(HttpMethod.PUT, "/api/categoriaproduto/*").permitAll()
+    .antMatchers(HttpMethod.DELETE, "/api/categoriaproduto/*").permitAll()
+    .antMatchers(HttpMethod.GET, "/api/categoriaproduto/").permitAll()
+        
+    .antMatchers(HttpMethod.PUT, "/api/cliente/*").permitAll()
+    .antMatchers(HttpMethod.DELETE, "/api/cliente/*").permitAll()
+    .antMatchers(HttpMethod.GET, "/api/cliente/").permitAll()
+        
+    .antMatchers(HttpMethod.POST, "/api/pedido").permitAll()
+    .antMatchers(HttpMethod.PUT, "/api/pedido/*").permitAll()
+    .antMatchers(HttpMethod.DELETE, "/api/pedido/*").permitAll()
+    .antMatchers(HttpMethod.GET, "/api/pedido/").permitAll();
+
 	 	
- 	      .antMatchers(HttpMethod.POST, "/api/produto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
-          .antMatchers(HttpMethod.PUT, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/produto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
-          .antMatchers(HttpMethod.GET, "/api/produto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
-          
-          .antMatchers(HttpMethod.GET, "/api/empresa").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Consulta de produto
-           .antMatchers(HttpMethod.PUT, "/api/empresa/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/empresa/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
-
-          
- 	      .antMatchers(HttpMethod.POST, "/api/categoriaproduto").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
-          .antMatchers(HttpMethod.PUT, "/api/categoriaproduto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/categoriaproduto/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
-          .antMatchers(HttpMethod.GET, "/api/categoriaproduto/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
-          
- 	      
-          .antMatchers(HttpMethod.PUT, "/api/cliente/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/cliente/*").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_ADMIN) //Exclusão de produto
-          .antMatchers(HttpMethod.GET, "/api/cliente/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
-          
-
- 	      .antMatchers(HttpMethod.POST, "/api/pedido").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Cadastro de produto
-          .antMatchers(HttpMethod.PUT, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Alteração de produto
-          .antMatchers(HttpMethod.DELETE, "/api/pedido/*").hasAnyAuthority(Usuario.ROLE_EMPRESA, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Exclusão de produto
-          .antMatchers(HttpMethod.GET, "/api/pedido/").hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN) //Consulta de produto
-          
-          
-
-	 	
-       	.anyRequest().hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN)
-        	.and().addFilterBefore(
-        		new JwtTokenAuthenticationFilter(jwtTokenProvider),
-        		UsernamePasswordAuthenticationFilter.class);
+       	//.anyRequest().hasAnyAuthority(Usuario.ROLE_CLIENTE, Usuario.ROLE_EMPRESA, Usuario.ROLE_ADMIN)
+        //	.and().addFilterBefore(
+        //		new JwtTokenAuthenticationFilter(jwtTokenProvider),
+        //		UsernamePasswordAuthenticationFilter.class);
 	 
     return http.build();
 }
