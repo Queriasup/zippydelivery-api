@@ -20,21 +20,18 @@ public class UsuarioService implements UserDetailsService {
 
     @Transactional
     public Usuario save(Usuario user) {
-
-	user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-	user.setHabilitado(Boolean.TRUE);
-	return repository.save(user);
+	    user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+	    user.setHabilitado(Boolean.TRUE);
+	    return repository.save(user);
     }
     
     @Transactional
     public Usuario findByUsername(String username) {
-
-	return repository.findByUsername(username);
+	    return repository.findByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-	
-	return repository.findByUsername(username);
+	    return repository.findByUsername(username);
     }
 }

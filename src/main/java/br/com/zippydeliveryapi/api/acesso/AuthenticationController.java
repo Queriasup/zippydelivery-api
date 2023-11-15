@@ -15,9 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//import br.com.ifpe.oxefood.modelo.acesso.Usuario;
-//import br.com.ifpe.oxefood.modelo.acesso.UsuarioService;
-//import br.com.ifpe.oxefood.seguranca.jwt.JwtTokenProvider;
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.acesso.UsuarioService;
 import br.com.zippydeliveryapi.segurança.jwt.JwtTokenProvider;
