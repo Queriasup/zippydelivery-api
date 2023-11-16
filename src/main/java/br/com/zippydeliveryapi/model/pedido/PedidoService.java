@@ -58,11 +58,23 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
-        return repository.findAll();
+
+        List<Pedido> pedidos = repository.findAll();
+
+        // for (Pedido pedido : pedidos) {
+        //     List<ItensPedido> itensPedido = itensPedidoRepository.findByidPedido(pedido.getId());
+        //     pedido.setItensPedido(itensPedido);
+           
+        // }
+
+        return  pedidos;
+
     }
 
     public Pedido findById(Long id) {
+        
         return repository.findById(id).get();
+        
     }
 
     @Transactional

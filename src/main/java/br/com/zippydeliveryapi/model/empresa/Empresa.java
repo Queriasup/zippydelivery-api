@@ -2,10 +2,13 @@ package br.com.zippydeliveryapi.model.empresa;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
+import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,6 +25,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Empresa extends EntidadeAuditavel {
+
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Usuario usuario;
+
 
  //   @Column(nullable = false, length = 100)
     private String nome;
