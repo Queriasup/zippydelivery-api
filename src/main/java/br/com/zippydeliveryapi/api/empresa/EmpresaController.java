@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 
@@ -36,8 +37,27 @@ public class EmpresaController {
     @ApiOperation(value = "Serviço responsável por salvar uma empresa no sistema.")
     @PostMapping
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
-        Empresa empresa = empresaService.save(request.build());
-        return new ResponseEntity<Empresa>(empresa, HttpStatus.CREATED);
+        // slide 31
+        Empresa empresa = request.build();
+        
+        // System.out.println(request.getPerfil());
+
+        // if(request.getPerfil() == null) {
+        //     empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
+        // } else { 
+        //     if (request.getPerfil() != null && !"".equals(request.getPerfil())) {
+        //     if (request.getPerfil().equals("Usuario")) {
+        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA_USER);
+        //     } else if (request.getPerfil().equals("Admin")) {
+        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
+        //     }
+        // }
+        // }
+        
+
+         Empresa empresaCriada = empresaService.save(empresa);
+        return new ResponseEntity<Empresa>(empresaCriada, HttpStatus.CREATED);
+
     }
 
     @ApiOperation(value = "Serviço responsável por listar todas as empresas do sistema.")

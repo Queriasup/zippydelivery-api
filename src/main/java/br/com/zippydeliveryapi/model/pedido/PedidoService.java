@@ -44,11 +44,13 @@ public class PedidoService {
         novoPedido.setDataHora(LocalDateTime.now());
         novoPedido.setStatusPagamento("Em aberto");
         novoPedido.setValorTotal(this.calcularValorTotalPedido(itens));
+        novoPedido.setHabilitado(true);
 
         Pedido pedidoSalvo = repository.saveAndFlush(novoPedido);
 
         for (ItensPedido item : itens) {
             item.setPedido(pedidoSalvo);
+            item.setHabilitado(true);
             itensPedidoRepository.saveAndFlush(item);
         }
         pedidoSalvo.setItensPedido(itens);
@@ -56,11 +58,23 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
-        return repository.findAll();
+
+        List<Pedido> pedidos = repository.findAll();
+
+        // for (Pedido pedido : pedidos) {
+        //     List<ItensPedido> itensPedido = itensPedidoRepository.findByidPedido(pedido.getId());
+        //     pedido.setItensPedido(itensPedido);
+           
+        // }
+
+        return  pedidos;
+
     }
 
     public Pedido findById(Long id) {
+        
         return repository.findById(id).get();
+        
     }
 
     @Transactional
