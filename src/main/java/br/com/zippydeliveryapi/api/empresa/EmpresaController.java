@@ -30,7 +30,6 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping("/api/empresa")
 @CrossOrigin
-
 public class EmpresaController {
 
     @Autowired
