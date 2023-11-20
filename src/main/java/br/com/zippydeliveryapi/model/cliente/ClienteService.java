@@ -38,15 +38,29 @@ private UsuarioService usuarioService;
     @Transactional
     public void update(Long id, Cliente clienteAlterado) {
         Cliente cliente = repository.findById(id).get();
-        cliente.setNome(clienteAlterado.getNome());
-        cliente.setEmail(clienteAlterado.getEmail());
-        cliente.setLogradouro(clienteAlterado.getLogradouro());
-        cliente.setBairro(clienteAlterado.getBairro());
-        cliente.setCidade(clienteAlterado.getCidade());
-        cliente.setEstado(clienteAlterado.getEstado());
-        cliente.setCep(clienteAlterado.getCep());
-        cliente.setComplemento(clienteAlterado.getComplemento());
-        
+
+        if (clienteAlterado.getBairro() == null) {
+
+            cliente.setNome(clienteAlterado.getNome());
+            cliente.setEmail(clienteAlterado.getEmail());
+            cliente.setSenha(clienteAlterado.getSenha());
+            cliente.setLogradouro(cliente.getLogradouro());
+            cliente.setBairro(cliente.getBairro());
+            cliente.setCidade(cliente.getCidade());
+            cliente.setEstado(cliente.getEstado());
+            cliente.setCep(cliente.getCep());
+            cliente.setComplemento(cliente.getComplemento());
+        } else {
+            cliente.setNome(cliente.getNome());
+            cliente.setEmail(cliente.getEmail());
+            cliente.setLogradouro(clienteAlterado.getLogradouro());
+            cliente.setBairro(clienteAlterado.getBairro());
+            cliente.setCidade(clienteAlterado.getCidade());
+            cliente.setEstado(clienteAlterado.getEstado());
+            cliente.setCep(clienteAlterado.getCep());
+            cliente.setComplemento(clienteAlterado.getComplemento());
+        }
+
         cliente.setVersao(cliente.getVersao() + 1);
         repository.save(cliente);
     }
