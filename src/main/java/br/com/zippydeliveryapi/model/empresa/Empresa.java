@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Where;
 
 import br.com.zippydeliveryapi.model.acesso.Usuario;
+import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,57 +27,59 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Empresa extends EntidadeAuditavel {
 
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Usuario usuario;
+  @ManyToOne
+  @JoinColumn(nullable = false)
+  private Usuario usuario;
 
+  //@Column(nullable = false, length = 100)
+  private String nome;
 
- //   @Column(nullable = false, length = 100)
-    private String nome;
+  //@Column(unique = true)
+  private String cnpj;
 
-  //  @Column(unique = true)
-    private String cnpj;
+  @Column(nullable = false, unique = true)
+  private String email;
 
-    @Column(nullable = false, unique = true)
-    private String email;
+  @Column
+  private CategoriaEmpresa categoria;
 
-    @Column
-    private String categoria;
+  @Column
+  private Integer tempoEntrega;
 
-    @Column
-    private Integer tempoEntrega;
+  @Column
+  private Double taxaFrete;
 
-    @Column
-    private Double taxaFrete;
+  @Column
+  private String telefone;
 
-    @Column
-    private String telefone;
+  @Column
+  private String imgPerfil;
 
-    @Column
-    private String imgPerfil;
+  @Column
+  private String imgCapa;
 
-    @Column
-    private String imgCapa;
+  @Column
+  private String logradouro;
 
-    @Column
-    private String logradouro;
+  @Column
+  private String bairro;
 
-    @Column
-    private String bairro;
+  @Column
+  private String cidade;
 
-    @Column
-    private String cidade;
+  @Column
+  private String estado;
 
-    @Column
-    private String estado;
+  // @Column(nullable = false, length = 10)
+  private String cep;
 
-  //  @Column(nullable = false, length = 10)
-    private String cep;
+  @Column
+  private String complemento;
 
-    @Column
-    private String complemento;
+  @Column
+  private String numeroEndereco;
 
-    @Column
-    private String numeroEndereco;
+  @Column
+  private String status;
 
 }

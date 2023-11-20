@@ -1,4 +1,4 @@
-package br.com.zippydeliveryapi.model.categoriaProduto;
+package br.com.zippydeliveryapi.model.categoria;
 
 import java.time.LocalDate;
 import java.util.List;

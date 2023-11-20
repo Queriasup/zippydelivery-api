@@ -1,4 +1,4 @@
-package br.com.zippydeliveryapi.api.categoriaProduto;
+package br.com.zippydeliveryapi.api.categoria;
 
 import java.util.List;
 
@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProdutoService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import io.swagger.annotations.ApiOperation;

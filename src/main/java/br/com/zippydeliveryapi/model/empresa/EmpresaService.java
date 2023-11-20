@@ -23,12 +23,12 @@ public class EmpresaService {
 
     @Transactional
     public Empresa save(Empresa empresa) {
-
         usuarioService.save(empresa.getUsuario());
         
         empresa.setHabilitado(Boolean.TRUE);
         empresa.setVersao(1L);
         empresa.setDataCriacao(LocalDate.now());
+        empresa.setStatus("Pendente");
         return repository.save(empresa);
     }
 
@@ -52,6 +52,13 @@ public class EmpresaService {
         empresa.setCep(empresaAlterado.getCep());
 
         empresa.setVersao(empresa.getVersao() + 1);
+        repository.save(empresa);
+    }
+
+    @Transactional
+    public void updateStatus(Long id, String novoStatus) {
+        Empresa empresa = repository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa", id));
+        empresa.setStatus(novoStatus);
         repository.save(empresa);
     }
 
@@ -81,5 +88,8 @@ public class EmpresaService {
 
         repository.save(empresa);
     }
+
+
+
 
 }

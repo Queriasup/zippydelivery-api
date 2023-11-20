@@ -1,7 +1,7 @@
 package br.com.zippydeliveryapi.model.produto;
 
 import org.hibernate.annotations.Where;
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import javax.persistence.Column;
 import javax.persistence.Entity;

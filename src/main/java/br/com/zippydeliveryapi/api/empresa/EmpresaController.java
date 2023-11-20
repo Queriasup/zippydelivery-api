@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.acesso.Usuario;
+import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
+import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresaService;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 
@@ -34,30 +36,21 @@ public class EmpresaController {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private CategoriaEmpresaService categoriaEmpresaService;
+
     @ApiOperation(value = "Serviço responsável por salvar uma empresa no sistema.")
     @PostMapping
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
-        // slide 31
-        Empresa empresa = request.build();
         
-        // System.out.println(request.getPerfil());
-
-        // if(request.getPerfil() == null) {
-        //     empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
-        // } else { 
-        //     if (request.getPerfil() != null && !"".equals(request.getPerfil())) {
-        //     if (request.getPerfil().equals("Usuario")) {
-        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA_USER);
-        //     } else if (request.getPerfil().equals("Admin")) {
-        //         empresa.getUsuario().getRoles().add(Usuario.ROLE_EMPRESA);
-        //     }
-        // }
-        // }
+        Empresa empresa = request.build(); 
+        CategoriaEmpresa categoria = categoriaEmpresaService.findById(empresa.getCategoria().getId());
         
 
-         Empresa empresaCriada = empresaService.save(empresa);
+        empresa.setCategoria(categoria);     
+        Empresa empresaCriada = empresaService.save(empresa);
+
         return new ResponseEntity<Empresa>(empresaCriada, HttpStatus.CREATED);
-
     }
 
     @ApiOperation(value = "Serviço responsável por listar todas as empresas do sistema.")
@@ -86,11 +79,19 @@ public class EmpresaController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "Serviço responsável por alterar o status de uma empresa referente ao Id passado na URL.")
+    @PutMapping("/{id}/updatestatus")
+    public ResponseEntity<Empresa> updateStatus(@PathVariable("id") Long id, String novoStatus) {
+        empresaService.updateStatus(id, novoStatus.toLowerCase());
+        return ResponseEntity.ok().build();
+    }
+
     @ApiOperation(value = "Serviço responsável por deletar uma empresa referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         empresaService.delete(id);
         return ResponseEntity.ok().build();
     }
+
 
 }
