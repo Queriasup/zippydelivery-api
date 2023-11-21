@@ -125,6 +125,28 @@ public class PedidoController {
      
     }
 
+    @GetMapping("/dashboardMensal/{id}")
+    public List<DashBoardResponse> DashboardMensal(@PathVariable Long id){
+
+        return pedidoService.DashboardMensal(id);
+     
+    }
+
+    @GetMapping("/dashboardAll")
+    public DashBoardResponse DashboardAll(){
+
+        return pedidoService.DashboardAll();
+     
+    }
+
+    @GetMapping("/dashboardMensalAll")
+    public List<DashBoardResponse> DashboardMensalAll(){
+
+        return pedidoService.DashboardMensalAll();
+     
+    }
+
+
 
 }
 

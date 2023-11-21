@@ -15,6 +15,6 @@ public class DashBoardResponse {
     private Integer vendasTotais;
     private Double fatoramentoTotal;
     private Integer vendaHoje;
-    private Double faturamentoMedioHoje;
+    private Double faturamentoMedio;
 
 }
