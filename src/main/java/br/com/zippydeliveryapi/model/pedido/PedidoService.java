@@ -1,10 +1,13 @@
 package br.com.zippydeliveryapi.model.pedido;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.zippydeliveryapi.api.pedido.DashBoardResponse;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoRepository;
 
@@ -94,6 +97,35 @@ public class PedidoService {
         pedido.setVersao(pedido.getVersao() + 1);
 
         repository.save(pedido);
+    }
+    public DashBoardResponse Dashboard(Long id) {
+
+       List<Pedido> pedidos = repository.findByidEmpresa(id);
+
+       DashBoardResponse response = new DashBoardResponse();
+
+       response.setVendasTotais(pedidos.size());
+
+        Double vendasHojeValor = 0.0;
+        response.setFatoramentoTotal(0.0);
+        response.setVendaHoje(0);
+
+       for (Pedido pedido : pedidos) {
+
+        response.setFatoramentoTotal(response.getFatoramentoTotal()+ pedido.getValorTotal());
+
+        if (pedido.getDataHora().toLocalDate().equals(LocalDate.now())){
+            response.setVendaHoje(response.getVendaHoje()+1);
+            vendasHojeValor = vendasHojeValor + pedido.getValorTotal();
+        }
+       }
+
+       response.setFaturamentoMedioHoje(vendasHojeValor/response.getVendaHoje());
+
+
+       return response;
+
+
     }
 
 }

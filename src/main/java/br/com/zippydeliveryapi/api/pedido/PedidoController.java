@@ -117,6 +117,14 @@ public class PedidoController {
         return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
     }
 
+    
+    @GetMapping("/dashboard/{id}")
+    public DashBoardResponse Dashboard(@PathVariable Long id){
+
+        return pedidoService.Dashboard(id);
+     
+    }
+
 
 }
 
