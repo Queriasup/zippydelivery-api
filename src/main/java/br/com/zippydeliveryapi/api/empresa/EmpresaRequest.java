@@ -42,7 +42,7 @@ public class EmpresaRequest {
     @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
     private String cep;
 
-    private CategoriaEmpresa categoria;
+    private Long idCategoria;
     private Integer tempoEntrega;
     private Double taxaFrete;
     private String telefone;
@@ -57,7 +57,7 @@ public class EmpresaRequest {
     private String numeroEndereco;
     private String senha;
 
-    public Empresa build() {
+    /* public Empresa build() {
 
         return Empresa.builder()
                 .nome(nome)
@@ -88,6 +88,6 @@ public class EmpresaRequest {
                 .username(email)
                 .password(senha)
                 .build();
-    }
+    } */
 
 }

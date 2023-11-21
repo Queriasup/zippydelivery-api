@@ -1,5 +1,6 @@
 package br.com.zippydeliveryapi.api.empresa;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -41,13 +42,36 @@ public class EmpresaController {
     @ApiOperation(value = "Serviço responsável por salvar uma empresa no sistema.")
     @PostMapping
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
-        
-        Empresa empresa = request.build(); 
-        CategoriaEmpresa categoria = categoriaEmpresaService.findById(empresa.getCategoria().getId());
-        
 
-        empresa.setCategoria(categoria);     
-        Empresa empresaCriada = empresaService.save(empresa);
+        CategoriaEmpresa categoria = categoriaEmpresaService.findById(request.getIdCategoria());
+
+        Usuario usuario = Usuario.builder()
+                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
+                .username(request.getEmail())
+                .password(request.getSenha())
+                .build();
+
+        Empresa empresaNova = Empresa.builder()
+                .nome(request.getNome())
+                .cnpj(request.getCnpj())
+                .email(request.getEmail())
+                .usuario(usuario)
+                .categoria(categoria)
+                .tempoEntrega(request.getTempoEntrega())
+                .taxaFrete(request.getTaxaFrete())
+                .telefone(request.getTelefone())
+                .imgPerfil(request.getImgPerfil())
+                .imgCapa(request.getImgCapa())
+                .logradouro(request.getLogradouro())
+                .bairro(request.getBairro())
+                .cidade(request.getCidade())
+                .estado(request.getEstado())
+                .cep(request.getCep())
+                .complemento(request.getComplemento())
+                .numeroEndereco(request.getNumeroEndereco())
+                .build();
+
+        Empresa empresaCriada = empresaService.save(empresaNova);
 
         return new ResponseEntity<Empresa>(empresaCriada, HttpStatus.CREATED);
     }
@@ -74,7 +98,35 @@ public class EmpresaController {
     @ApiOperation(value = "Serviço responsável por atualizar uma empresa referente ao Id passado na URL.")
     @PutMapping("/{id}")
     public ResponseEntity<Empresa> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
-        empresaService.update(id, request.build());
+        CategoriaEmpresa categoria = categoriaEmpresaService.findById(request.getIdCategoria());
+
+        Usuario usuario = Usuario.builder()
+                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
+                .username(request.getEmail())
+                .password(request.getSenha())
+                .build();
+
+        Empresa empresaNova = Empresa.builder()
+                .nome(request.getNome())
+                .cnpj(request.getCnpj())
+                .email(request.getEmail())
+                .usuario(usuario)
+                .categoria(categoria)
+                .tempoEntrega(request.getTempoEntrega())
+                .taxaFrete(request.getTaxaFrete())
+                .telefone(request.getTelefone())
+                .imgPerfil(request.getImgPerfil())
+                .imgCapa(request.getImgCapa())
+                .logradouro(request.getLogradouro())
+                .bairro(request.getBairro())
+                .cidade(request.getCidade())
+                .estado(request.getEstado())
+                .cep(request.getCep())
+                .complemento(request.getComplemento())
+                .numeroEndereco(request.getNumeroEndereco())
+                .build();
+
+        empresaService.update(id, empresaNova);
         return ResponseEntity.ok().build();
     }
 
