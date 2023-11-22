@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoRepository;
-
+import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 import javax.transaction.Transactional;
 
 @Service
@@ -18,6 +18,7 @@ public class PedidoService {
 
     @Autowired
     private ItensPedidoRepository itensPedidoRepository;
+
 
     private List<ItensPedido> criaListaPedidos(Pedido pedido) {
         List<ItensPedido> itens = new ArrayList<ItensPedido>();
@@ -32,7 +33,7 @@ public class PedidoService {
         Double valorTotal = 0.0;
 
         for (ItensPedido itens : itensPedidos) {
-            valorTotal = valorTotal + itens.getValorTotal();
+            valorTotal += itens.getValorTotal();
         }
         return valorTotal;
     }
@@ -58,23 +59,12 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
-
-        List<Pedido> pedidos = repository.findAll();
-
-        // for (Pedido pedido : pedidos) {
-        //     List<ItensPedido> itensPedido = itensPedidoRepository.findByidPedido(pedido.getId());
-        //     pedido.setItensPedido(itensPedido);
-           
-        // }
-
-        return  pedidos;
-
+        //List<Pedido> pedidos = repository.findAll();
+        return repository.findAll();
     }
 
     public Pedido findById(Long id) {
-        
         return repository.findById(id).get();
-        
     }
 
     @Transactional
@@ -89,7 +79,9 @@ public class PedidoService {
 
     @Transactional
     public void delete(Long id) {
-        Pedido pedido = repository.findById(id).get();
+        Pedido pedido = repository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido", id));
+
         pedido.setHabilitado(Boolean.FALSE);
         pedido.setVersao(pedido.getVersao() + 1);
 
