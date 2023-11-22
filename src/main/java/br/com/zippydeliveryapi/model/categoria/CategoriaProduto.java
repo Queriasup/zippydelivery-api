@@ -1,5 +1,4 @@
-package br.com.zippydeliveryapi.model.categoriaProduto;
-
+package br.com.zippydeliveryapi.model.categoria;
 
 import org.hibernate.annotations.Where;
 
