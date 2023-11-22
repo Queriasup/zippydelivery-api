@@ -2,11 +2,6 @@ package br.com.zippydeliveryapi.api.empresa;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.zippydeliveryapi.model.acesso.Usuario;
-import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
-import br.com.zippydeliveryapi.model.empresa.Empresa;
-
-import java.util.Arrays;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;

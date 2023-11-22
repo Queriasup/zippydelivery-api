@@ -72,6 +72,36 @@ public class PedidoController {
         return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
     }
 
+    
+    @GetMapping("/dashboard/{id}")
+    public DashBoardResponse Dashboard(@PathVariable Long id){
+
+        return pedidoService.Dashboard(id);
+     
+    }
+
+    @GetMapping("/dashboardMensal/{id}")
+    public List<DashBoardResponse> DashboardMensal(@PathVariable Long id){
+
+        return pedidoService.DashboardMensal(id);
+     
+    }
+
+    @GetMapping("/dashboardAll")
+    public DashBoardResponse DashboardAll(){
+
+        return pedidoService.DashboardAll();
+     
+    }
+
+    @GetMapping("/dashboardMensalAll")
+    public List<DashBoardResponse> DashboardMensalAll(){
+
+        return pedidoService.DashboardMensalAll();
+     
+    }
+
+
     @GetMapping
     public List<Pedido> findAll() {
         return pedidoService.findAll();
