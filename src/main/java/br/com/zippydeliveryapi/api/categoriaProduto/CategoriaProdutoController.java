@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
 import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
-
+import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -32,10 +32,15 @@ public class CategoriaProdutoController {
     @Autowired
     private CategoriaProdutoService categoriaProdutoService;
 
+    @Autowired
+    private EmpresaService empresaService;
+
+
     @ApiOperation(value = "Serviço responsável por salvar uma categoria de produto no sistema.")
     @PostMapping
     public ResponseEntity<CategoriaProduto> save(@RequestBody @Valid CategoriaProdutoRequest request) {
         CategoriaProduto categoriaProduto = request.build();
+        categoriaProduto.setEmpresa(empresaService.findById(request.getEmpresa_id()));
         CategoriaProduto categoriaProdutoNova = categoriaProdutoService.save(categoriaProduto);
 
         return new ResponseEntity<CategoriaProduto>(categoriaProdutoNova, HttpStatus.CREATED);

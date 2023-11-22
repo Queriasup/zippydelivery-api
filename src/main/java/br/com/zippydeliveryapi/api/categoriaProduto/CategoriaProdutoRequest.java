@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class CategoriaProdutoRequest {
 
     private String descricao;
+
+    private Long empresa_id;
     
      public CategoriaProduto build() {
       
