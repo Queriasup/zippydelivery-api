@@ -14,6 +14,8 @@ public class CategoriaProdutoRequest {
 
   private String descricao;
 
+  private long empresa_id;
+
   public CategoriaProduto build() {
     return CategoriaProduto.builder()
         .descricao(descricao)
