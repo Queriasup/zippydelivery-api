@@ -44,35 +44,9 @@ public class EmpresaController {
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequest request) {
 
         CategoriaEmpresa categoria = categoriaEmpresaService.findById(request.getIdCategoria());
-
-        Usuario usuario = Usuario.builder()
-                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
-                .username(request.getEmail())
-                .password(request.getSenha())
-                .build();
-
-        Empresa empresaNova = Empresa.builder()
-                .nome(request.getNome())
-                .cnpj(request.getCnpj())
-                .email(request.getEmail())
-                .usuario(usuario)
-                .categoria(categoria)
-                .tempoEntrega(request.getTempoEntrega())
-                .taxaFrete(request.getTaxaFrete())
-                .telefone(request.getTelefone())
-                .imgPerfil(request.getImgPerfil())
-                .imgCapa(request.getImgCapa())
-                .logradouro(request.getLogradouro())
-                .bairro(request.getBairro())
-                .cidade(request.getCidade())
-                .estado(request.getEstado())
-                .cep(request.getCep())
-                .complemento(request.getComplemento())
-                .numeroEndereco(request.getNumeroEndereco())
-                .build();
-
+        Empresa empresaNova = Empresa.fromRequest(request, categoria);
         Empresa empresaCriada = empresaService.save(empresaNova);
-
+        
         return new ResponseEntity<Empresa>(empresaCriada, HttpStatus.CREATED);
     }
 
@@ -100,33 +74,9 @@ public class EmpresaController {
     public ResponseEntity<Empresa> update(@PathVariable("id") Long id, @RequestBody EmpresaRequest request) {
         CategoriaEmpresa categoria = categoriaEmpresaService.findById(request.getIdCategoria());
 
-        Usuario usuario = Usuario.builder()
-                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
-                .username(request.getEmail())
-                .password(request.getSenha())
-                .build();
-
-        Empresa empresaNova = Empresa.builder()
-                .nome(request.getNome())
-                .cnpj(request.getCnpj())
-                .email(request.getEmail())
-                .usuario(usuario)
-                .categoria(categoria)
-                .tempoEntrega(request.getTempoEntrega())
-                .taxaFrete(request.getTaxaFrete())
-                .telefone(request.getTelefone())
-                .imgPerfil(request.getImgPerfil())
-                .imgCapa(request.getImgCapa())
-                .logradouro(request.getLogradouro())
-                .bairro(request.getBairro())
-                .cidade(request.getCidade())
-                .estado(request.getEstado())
-                .cep(request.getCep())
-                .complemento(request.getComplemento())
-                .numeroEndereco(request.getNumeroEndereco())
-                .build();
-
-        empresaService.update(id, empresaNova);
+        Empresa empresaAtualizada = Empresa.fromRequest(request, categoria);
+        empresaService.update(id, empresaAtualizada);
+        
         return ResponseEntity.ok().build();
     }
 

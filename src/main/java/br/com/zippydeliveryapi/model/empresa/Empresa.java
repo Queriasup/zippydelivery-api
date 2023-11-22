@@ -1,5 +1,7 @@
 package br.com.zippydeliveryapi.model.empresa;
 
+import java.util.Arrays;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -8,6 +10,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Where;
 
+import br.com.zippydeliveryapi.api.empresa.EmpresaRequest;
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
@@ -31,17 +34,18 @@ public class Empresa extends EntidadeAuditavel {
   @JoinColumn(nullable = false)
   private Usuario usuario;
 
-  //@Column(nullable = false, length = 100)
+  @ManyToOne
+  @JoinColumn(name = "idCategoria")
+  private CategoriaEmpresa categoria;
+
+  // @Column(nullable = false, length = 100)
   private String nome;
 
-  //@Column(unique = true)
+  // @Column(unique = true)
   private String cnpj;
 
   @Column(nullable = false, unique = true)
   private String email;
-
-  @Column
-  private CategoriaEmpresa categoria;
 
   @Column
   private Integer tempoEntrega;
@@ -81,5 +85,33 @@ public class Empresa extends EntidadeAuditavel {
 
   @Column
   private String status;
+
+  public static Empresa fromRequest(EmpresaRequest request, CategoriaEmpresa categoria) {
+    Usuario usuario = Usuario.builder()
+        .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
+        .username(request.getEmail())
+        .password(request.getSenha())
+        .build();
+
+    return Empresa.builder()
+        .nome(request.getNome())
+        .cnpj(request.getCnpj())
+        .email(request.getEmail())
+        .usuario(usuario)
+        .categoria(categoria)
+        .tempoEntrega(request.getTempoEntrega())
+        .taxaFrete(request.getTaxaFrete())
+        .telefone(request.getTelefone())
+        .imgPerfil(request.getImgPerfil())
+        .imgCapa(request.getImgCapa())
+        .logradouro(request.getLogradouro())
+        .bairro(request.getBairro())
+        .cidade(request.getCidade())
+        .estado(request.getEstado())
+        .cep(request.getCep())
+        .complemento(request.getComplemento())
+        .numeroEndereco(request.getNumeroEndereco())
+        .build();
+  }
 
 }

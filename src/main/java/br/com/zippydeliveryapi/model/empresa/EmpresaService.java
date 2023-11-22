@@ -57,7 +57,9 @@ public class EmpresaService {
 
     @Transactional
     public void updateStatus(Long id, String novoStatus) {
-        Empresa empresa = repository.findById(id).orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa", id));
+        Empresa empresa = repository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa", id));
+
         empresa.setStatus(novoStatus);
         repository.save(empresa);
     }
@@ -67,29 +69,24 @@ public class EmpresaService {
     }
 
     public Empresa findById(Long id) {
-        Optional<Empresa> consulta = repository.findById(id);
-
-        if (consulta.isPresent()) {
-            return consulta.get();
-        } else {
-            throw new EntidadeNaoEncontradaException("Empresa", id);
-        }
+        return repository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa", id));
     }
 
     @Transactional
     public void delete(Long id) {
-        Empresa empresa = repository.findById(id).get();
+        Empresa empresa = repository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Empresa", id));
 
         empresa.setHabilitado(Boolean.FALSE);
         empresa.setVersao(empresa.getVersao() + 1);
         empresa.setCnpj("");
         empresa.setEmail("");
         empresa.setTelefone("");
+        empresa.getUsuario().setUsername("");
+        empresa.getUsuario().setPassword("");
 
         repository.save(empresa);
     }
-
-
-
 
 }
