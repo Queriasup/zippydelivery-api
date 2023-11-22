@@ -82,8 +82,8 @@ public class EmpresaController {
 
     @ApiOperation(value = "Serviço responsável por alterar o status de uma empresa referente ao Id passado na URL.")
     @PutMapping("/{id}/updatestatus")
-    public ResponseEntity<Empresa> updateStatus(@PathVariable("id") Long id, String novoStatus) {
-        empresaService.updateStatus(id, novoStatus.toLowerCase());
+    public ResponseEntity<Empresa> updateStatus(@PathVariable("id") Long id, @RequestBody String novoStatus) {
+        empresaService.updateStatus(id, novoStatus);
         return ResponseEntity.ok().build();
     }
 
