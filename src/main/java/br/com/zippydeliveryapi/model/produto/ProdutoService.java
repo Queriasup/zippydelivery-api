@@ -5,11 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
 import br.com.zippydeliveryapi.util.exception.ProdutoException;
 import javax.transaction.Transactional;
 
@@ -19,7 +18,7 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository repository;
 
-    @javax.transaction.Transactional
+    @Transactional
     public Produto save(Produto produto) {
         if (produto.getDisponibilidade() == false) {
             throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
@@ -39,9 +38,12 @@ public class ProdutoService {
         return repository.findById(id).get();
     }
 
+    public List<Produto> findByCategory(Long idCategoria) {
+        return repository.findByCategoriaId(idCategoria);
+    }
+
     @Transactional
     public void update(Long id, Produto produtoAlterado) {
-
         Produto produto = repository.findById(id).get();
         produto.setCategoria(produto.getCategoria());
         produto.setDescricao(produtoAlterado.getDescricao());

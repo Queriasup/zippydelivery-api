@@ -1,4 +1,4 @@
-package br.com.zippydeliveryapi.api.categoriaProduto;
+package br.com.zippydeliveryapi.api.categoria;
 
 import java.util.List;
 
@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProdutoService;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
+import br.com.zippydeliveryapi.model.produto.Produto;
+import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -35,6 +37,8 @@ public class CategoriaProdutoController {
     @Autowired
     private EmpresaService empresaService;
 
+    @Autowired
+    private ProdutoService produtoService;
 
     @ApiOperation(value = "Serviço responsável por salvar uma categoria de produto no sistema.")
     @PostMapping
@@ -75,6 +79,13 @@ public class CategoriaProdutoController {
     @ApiOperation(value = "Serviço responsável por deletar uma categoria de produto referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+
+        List<Produto> produtos = produtoService.findByCategory(id);
+        
+        for(Produto p : produtos){
+            produtoService.delete(p.getId());
+        }
+
         categoriaProdutoService.delete(id);
         return ResponseEntity.ok().build();
     }
