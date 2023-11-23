@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +21,7 @@ public class ProdutoService {
     @Transactional
     public Produto save(Produto produto) {
         if (produto.getDisponibilidade() == false) {
-            throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
+            throw new ProdutoException(ProdutoException.MESSAGE_DISPONIBILIDADE_PRODUTO);
         }
 
         produto.setHabilitado(Boolean.TRUE);
@@ -72,9 +70,9 @@ public class ProdutoService {
 
         for (Object[] resultado : resultados) {
             CategoriaProduto categoria = (CategoriaProduto) resultado[0];
-            Object produto = resultado[1];
+            Produto produto = (Produto) resultado[1];
 
-            if (produto != null) {
+            if (produto != null && produto.getHabilitado() == true) {
                 categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
             }
         }

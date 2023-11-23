@@ -19,8 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresaService;
-import br.com.zippydeliveryapi.model.empresa.Empresa;
-import br.com.zippydeliveryapi.model.empresa.EmpresaService;
+
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

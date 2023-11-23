@@ -43,10 +43,9 @@ public class PedidoController {
     @Autowired
     private ProdutoService produtoService;
 
-
+    
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody @Valid PedidoRequest request) {
-
         Empresa empresa = empresaService.findById(request.getId_empresa());
 
         Pedido pedidoNovo = Pedido.builder()
@@ -86,7 +85,6 @@ public class PedidoController {
     public ResponseEntity<Pedido> update(@PathVariable("id") Long id, @RequestBody PedidoRequest request) {
         pedidoService.update(id, request.getStatusPagamento(), request.getStatusPedido());
         return ResponseEntity.ok().build();
-
     }
 
     @DeleteMapping("/{id}")
@@ -111,6 +109,24 @@ public class PedidoController {
         return itens;
     }
 
-    
+    @GetMapping("/dashboard/{id}")
+    public DashBoardResponse Dashboard(@PathVariable Long id) {
+        return pedidoService.Dashboard(id);
+    }
+
+    @GetMapping("/dashboardMensal/{id}")
+    public List<DashBoardResponse> DashboardMensal(@PathVariable Long id) {
+        return pedidoService.DashboardMensal(id);
+    }
+
+    @GetMapping("/dashboardAll")
+    public DashBoardResponse DashboardAll() {
+        return pedidoService.DashboardAll();
+    }
+
+    @GetMapping("/dashboardMensalAll")
+    public List<DashBoardResponse> DashboardMensalAll() {
+        return pedidoService.DashboardMensalAll();
+    }
 
 }
