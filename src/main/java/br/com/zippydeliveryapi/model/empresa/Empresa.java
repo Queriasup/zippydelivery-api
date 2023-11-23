@@ -1,24 +1,16 @@
 package br.com.zippydeliveryapi.model.empresa;
 
 import java.util.Arrays;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
+import java.util.Set;
+import java.util.stream.Collectors;
+import javax.persistence.*;
 import org.hibernate.annotations.Where;
-
 import br.com.zippydeliveryapi.api.empresa.EmpresaRequest;
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import br.com.zippydeliveryapi.util.enums.FormaPagamento;
+import lombok.*;
 
 @Entity
 @Table(name = "Empresa")
@@ -37,6 +29,12 @@ public class Empresa extends EntidadeAuditavel {
   @ManyToOne
   @JoinColumn(name = "idCategoria")
   private CategoriaEmpresa categoria;
+
+  @ElementCollection(targetClass = FormaPagamento.class, fetch = FetchType.EAGER)
+  @CollectionTable(name = "empresa_formas_pagamento", joinColumns = @JoinColumn(name = "empresa_id"))
+  @Column(name = "forma_pagamento", nullable = false)
+  @Enumerated(EnumType.STRING)
+  private Set<FormaPagamento> formasPagamento;
 
   // @Column(nullable = false, length = 100)
   private String nome;
@@ -93,6 +91,10 @@ public class Empresa extends EntidadeAuditavel {
         .password(request.getSenha())
         .build();
 
+    Set<FormaPagamento> formasPagamento = Arrays.stream(request.getFormasPagamento())
+        .map(FormaPagamento::valueOf)
+        .collect(Collectors.toSet());
+
     return Empresa.builder()
         .nome(request.getNome())
         .cnpj(request.getCnpj())
@@ -111,6 +113,7 @@ public class Empresa extends EntidadeAuditavel {
         .cep(request.getCep())
         .complemento(request.getComplemento())
         .numeroEndereco(request.getNumeroEndereco())
+        .formasPagamento(formasPagamento)
         .build();
   }
 
