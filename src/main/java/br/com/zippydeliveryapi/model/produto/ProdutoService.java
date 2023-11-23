@@ -21,7 +21,7 @@ public class ProdutoService {
     @Transactional
     public Produto save(Produto produto) {
         if (produto.getDisponibilidade() == false) {
-            throw new ProdutoException(ProdutoException.MSG_DISPONIBILIDADE_PRODUTO);
+            throw new ProdutoException(ProdutoException.MESSAGE_DISPONIBILIDADE_PRODUTO);
         }
 
         produto.setHabilitado(Boolean.TRUE);
@@ -70,9 +70,9 @@ public class ProdutoService {
 
         for (Object[] resultado : resultados) {
             CategoriaProduto categoria = (CategoriaProduto) resultado[0];
-            Object produto = resultado[1];
+            Produto produto = (Produto) resultado[1];
 
-            if (produto != null) {
+            if (produto != null && produto.getHabilitado() == true) {
                 categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
             }
         }
