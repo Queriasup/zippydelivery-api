@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProduto;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
 import br.com.zippydeliveryapi.util.exception.ProdutoException;
 import javax.transaction.Transactional;
 

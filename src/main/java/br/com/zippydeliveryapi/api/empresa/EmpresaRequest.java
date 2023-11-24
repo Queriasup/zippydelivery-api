@@ -2,10 +2,6 @@ package br.com.zippydeliveryapi.api.empresa;
 
 import org.hibernate.validator.constraints.Length;
 
-import br.com.zippydeliveryapi.model.acesso.Usuario;
-import br.com.zippydeliveryapi.model.empresa.Empresa;
-
-import java.util.Arrays;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -40,8 +36,8 @@ public class EmpresaRequest {
     @NotBlank(message = "O CEP é de preenchimento obrigatório")
     @Length(max = 10, message = "O CEP deverá ter no máximo {max} caracteres")
     private String cep;
- 
-    private String categoria;
+
+    private Long idCategoria;
     private Integer tempoEntrega;
     private Double taxaFrete;
     private String telefone;
@@ -54,11 +50,10 @@ public class EmpresaRequest {
     private String estado;
     private String complemento;
     private String numeroEndereco;
-
     private String senha;
 
-    public Empresa build() {
-        
+    /* public Empresa build() {
+
         return Empresa.builder()
                 .nome(nome)
                 .cnpj(cnpj)
@@ -79,14 +74,15 @@ public class EmpresaRequest {
                 .numeroEndereco(numeroEndereco)
                 .build();
     }
-     public Usuario buildUsuario() {
-	
-	return Usuario.builder()
-    
-        .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
-		.username(email)
-		.password(senha)
-		.build();
-    }
+
+    public Usuario buildUsuario() {
+
+        return Usuario.builder()
+
+                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
+                .username(email)
+                .password(senha)
+                .build();
+    } */
 
 }

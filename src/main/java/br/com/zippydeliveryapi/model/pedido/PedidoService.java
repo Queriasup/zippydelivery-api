@@ -1,13 +1,16 @@
 package br.com.zippydeliveryapi.model.pedido;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import br.com.zippydeliveryapi.api.pedido.DashBoardResponse;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoRepository;
-
+import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 import javax.transaction.Transactional;
 
 @Service
@@ -19,6 +22,7 @@ public class PedidoService {
     @Autowired
     private ItensPedidoRepository itensPedidoRepository;
 
+
     private List<ItensPedido> criaListaPedidos(Pedido pedido) {
         List<ItensPedido> itens = new ArrayList<ItensPedido>();
 
@@ -27,12 +31,13 @@ public class PedidoService {
         }
         return itens;
     }
-    //SOMAR A TAXA 
-    private Double calcularValorTotalPedido(List<ItensPedido> itensPedidos){
+
+    // SOMAR A TAXA
+    private Double calcularValorTotalPedido(List<ItensPedido> itensPedidos) {
         Double valorTotal = 0.0;
 
         for (ItensPedido itens : itensPedidos) {
-            valorTotal = valorTotal + itens.getValorTotal();
+            valorTotal += itens.getValorTotal();
         }
         return valorTotal;
     }
@@ -58,23 +63,12 @@ public class PedidoService {
     }
 
     public List<Pedido> findAll() {
-
-        List<Pedido> pedidos = repository.findAll();
-
-        // for (Pedido pedido : pedidos) {
-        //     List<ItensPedido> itensPedido = itensPedidoRepository.findByidPedido(pedido.getId());
-        //     pedido.setItensPedido(itensPedido);
-           
-        // }
-
-        return  pedidos;
-
+        //List<Pedido> pedidos = repository.findAll();
+        return repository.findAll();
     }
 
     public Pedido findById(Long id) {
-        
         return repository.findById(id).get();
-        
     }
 
     @Transactional
@@ -89,11 +83,147 @@ public class PedidoService {
 
     @Transactional
     public void delete(Long id) {
-        Pedido pedido = repository.findById(id).get();
+        Pedido pedido = repository.findById(id)
+            .orElseThrow(() -> new EntidadeNaoEncontradaException("Pedido", id));
+
         pedido.setHabilitado(Boolean.FALSE);
         pedido.setVersao(pedido.getVersao() + 1);
 
         repository.save(pedido);
+    }
+
+    public DashBoardResponse Dashboard(Long id) {
+
+        List<Pedido> pedidos = repository.findByidEmpresa(id);
+
+        DashBoardResponse response = new DashBoardResponse();
+
+        response.setVendasTotais(pedidos.size());
+
+        Double vendasHojeValor = 0.0;
+        response.setFatoramentoTotal(0.0);
+        response.setVendaHoje(0);
+
+        for (Pedido pedido : pedidos) {
+
+            response.setFatoramentoTotal(response.getFatoramentoTotal() + pedido.getValorTotal());
+
+            if (pedido.getDataHora().toLocalDate().equals(LocalDate.now())) {
+                response.setVendaHoje(response.getVendaHoje() + 1);
+                vendasHojeValor = vendasHojeValor + pedido.getValorTotal();
+            }
+        }
+
+        response.setFaturamentoMedio(vendasHojeValor / response.getVendaHoje());
+
+        return response;
+
+    }
+
+    public List<DashBoardResponse> DashboardMensal(Long id) {
+
+        List<Pedido> pedidos = repository.findByidEmpresa(id);
+
+        List<DashBoardResponse> responses = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            responses.add(new DashBoardResponse());
+        }
+
+        for (Pedido pedido : pedidos) {
+            int mes = pedido.getDataHora().getMonthValue() - 1;
+
+            DashBoardResponse response = responses.get(mes);
+            if (response.getVendasTotais() == null) {
+                response.setVendasTotais(0);
+            }
+            response.setVendasTotais(response.getVendasTotais() + 1);
+            if (response.getFatoramentoTotal() == null) {
+                response.setFatoramentoTotal(0.0);
+            }
+            response.setFatoramentoTotal(response.getFatoramentoTotal() + pedido.getValorTotal());
+        }
+
+        for (DashBoardResponse dashBoardResponse : responses) {
+
+            if (dashBoardResponse.getVendasTotais() == null) {
+                dashBoardResponse.setVendasTotais(0);
+            }
+            if (dashBoardResponse.getFatoramentoTotal() == null) {
+                dashBoardResponse.setFatoramentoTotal(0.0);
+            }
+            if (dashBoardResponse.getVendasTotais() > 0) {
+                dashBoardResponse.setFaturamentoMedio(
+                        dashBoardResponse.getFatoramentoTotal() / dashBoardResponse.getVendasTotais());
+            }
+        }
+
+        return responses;
+    }
+
+    public DashBoardResponse DashboardAll() {
+
+        List<Pedido> pedidos = repository.findAll();
+
+        DashBoardResponse response = new DashBoardResponse();
+
+        response.setVendasTotais(pedidos.size());
+
+        Double vendasHojeValor = 0.0;
+        response.setFatoramentoTotal(0.0);
+        response.setVendaHoje(0);
+
+        for (Pedido pedido : pedidos) {
+
+            response.setFatoramentoTotal(response.getFatoramentoTotal() + pedido.getValorTotal());
+
+            if (pedido.getDataHora().toLocalDate().equals(LocalDate.now())) {
+                response.setVendaHoje(response.getVendaHoje() + 1);
+                vendasHojeValor = vendasHojeValor + pedido.getValorTotal();
+            }
+        }
+
+        response.setFaturamentoMedio(vendasHojeValor / response.getVendaHoje());
+
+        return response;
+    }
+
+    public List<DashBoardResponse> DashboardMensalAll() {
+           List<Pedido> pedidos = repository.findAll();
+
+        List<DashBoardResponse> responses = new ArrayList<>();
+        for (int i = 0; i < 12; i++) {
+            responses.add(new DashBoardResponse());
+        }
+
+        for (Pedido pedido : pedidos) {
+            int mes = pedido.getDataHora().getMonthValue() - 1;
+
+            DashBoardResponse response = responses.get(mes);
+            if (response.getVendasTotais() == null) {
+                response.setVendasTotais(0);
+            }
+            response.setVendasTotais(response.getVendasTotais() + 1);
+            if (response.getFatoramentoTotal() == null) {
+                response.setFatoramentoTotal(0.0);
+            }
+            response.setFatoramentoTotal(response.getFatoramentoTotal() + pedido.getValorTotal());
+        }
+
+        for (DashBoardResponse dashBoardResponse : responses) {
+
+            if (dashBoardResponse.getVendasTotais() == null) {
+                dashBoardResponse.setVendasTotais(0);
+            }
+            if (dashBoardResponse.getFatoramentoTotal() == null) {
+                dashBoardResponse.setFatoramentoTotal(0.0);
+            }
+            if (dashBoardResponse.getVendasTotais() > 0) {
+                dashBoardResponse.setFaturamentoMedio(
+                        dashBoardResponse.getFatoramentoTotal() / dashBoardResponse.getVendasTotais());
+            }
+        }
+
+        return responses;
     }
 
 }
