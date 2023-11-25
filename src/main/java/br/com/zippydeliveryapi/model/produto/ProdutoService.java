@@ -80,4 +80,23 @@ public class ProdutoService {
         return new ArrayList<>(categoriasMap.values());
     }
 
+    
+    public List<List<Object>> agruparPorCategoriaeEmpresa(Long id) {
+        List<Object[]> resultados = repository.findByEmpresaGroupByCategoria(id);
+        Map<Long, List<Object>> categoriasMap = new HashMap<>();
+    
+        for (Object[] resultado : resultados) {
+            CategoriaProduto categoria = (CategoriaProduto) resultado[0];
+            Object produto = resultado[1];
+    
+            if (produto != null) {
+                categoriasMap.computeIfAbsent(categoria.getId(), k -> new ArrayList<>()).add(produto);
+            }
+        }
+    
+        return new ArrayList<>(categoriasMap.values());
+    }
+    
+
+
 }
