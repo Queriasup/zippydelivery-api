@@ -2,6 +2,7 @@ package br.com.zippydeliveryapi.model.produto;
 
 import org.hibernate.annotations.Where;
 import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
+import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +30,10 @@ public class Produto extends EntidadeAuditavel {
    @ManyToOne
    @JoinColumn(name = "categoria_id")
    private CategoriaProduto categoria;
+
+   @ManyToOne
+   @JoinColumn(name = "empresa_id")
+   private Empresa empresa;
 
    @Column(nullable = false, length = 100)
    private String titulo;

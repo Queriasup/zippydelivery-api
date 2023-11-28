@@ -47,11 +47,8 @@ public class Pedido extends EntidadeAuditavel {
     @Column
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
-   
     private List<ItensPedido> itensPedido;
-
-   
-
+    
     @Column
     private LocalDateTime dataHora;
 
