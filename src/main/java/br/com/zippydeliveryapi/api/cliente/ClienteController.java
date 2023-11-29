@@ -72,7 +72,7 @@ public class ClienteController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/user/{email}")
     public Cliente findByUser(@PathVariable String email) {
         Cliente cliente = clienteService.findByUsuario(email);
         return cliente;
