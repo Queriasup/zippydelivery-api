@@ -50,6 +50,7 @@ public class AuthenticationController {
 
             Map<Object, Object> model = new HashMap<>();
             model.put("username", usuario.getUsername());
+            model.put("id", usuario.getId());
             model.put("token", token);
             model.put("refresh", refreshToken);
 
