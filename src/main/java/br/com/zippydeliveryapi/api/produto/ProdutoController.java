@@ -77,4 +77,10 @@ public class ProdutoController {
         return produtoService.agruparPorCategoria();
     }
 
+     @GetMapping("/porcategoriaeempresa/{id}")
+    public List<List<Object>> agruparPorCategoriaeEmpresa(@PathVariable Long id) {
+        return produtoService.agruparPorCategoriaeEmpresa(id);
+    }
+
+
 }
