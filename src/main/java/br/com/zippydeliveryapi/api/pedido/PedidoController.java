@@ -41,7 +41,6 @@ public class PedidoController {
     @Autowired
     private EmpresaService empresaService;
 
-    
     @Autowired
     private ProdutoService produtoService;
 
@@ -127,4 +126,3 @@ public class PedidoController {
     }
     
 }
-
