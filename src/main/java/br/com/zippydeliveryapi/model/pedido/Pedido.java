@@ -3,6 +3,7 @@ package br.com.zippydeliveryapi.model.pedido;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.Where;
@@ -47,9 +48,7 @@ public class Pedido extends EntidadeAuditavel {
     @OneToMany(mappedBy = "pedido", fetch = FetchType.EAGER, orphanRemoval = true, cascade = CascadeType.ALL)
     @Fetch(FetchMode.SUBSELECT)
     private List<ItensPedido> itensPedido;
-
-   
-
+    
     @Column
     private LocalDateTime dataHora;
 

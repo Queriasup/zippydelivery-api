@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.model.categoriaProduto.CategoriaProdutoService;
+import br.com.zippydeliveryapi.model.categoria.CategoriaProdutoService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import javax.validation.Valid;
@@ -85,5 +85,11 @@ public class ProdutoController {
     public List<List<Object>> agruparPorCategoria() {
         return produtoService.agruparPorCategoria();
     }
+
+     @GetMapping("/porcategoriaeempresa/{id}")
+    public List<List<Object>> agruparPorCategoriaeEmpresa(@PathVariable Long id) {
+        return produtoService.agruparPorCategoriaeEmpresa(id);
+    }
+
 
 }
