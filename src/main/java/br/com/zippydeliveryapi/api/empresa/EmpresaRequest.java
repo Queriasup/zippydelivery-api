@@ -1,8 +1,6 @@
 package br.com.zippydeliveryapi.api.empresa;
 
 import org.hibernate.validator.constraints.Length;
-
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -51,38 +49,6 @@ public class EmpresaRequest {
     private String complemento;
     private String numeroEndereco;
     private String senha;
-
-    /* public Empresa build() {
-
-        return Empresa.builder()
-                .nome(nome)
-                .cnpj(cnpj)
-                .email(email)
-                .usuario(buildUsuario())
-                .categoria(categoria)
-                .tempoEntrega(tempoEntrega)
-                .taxaFrete(taxaFrete)
-                .telefone(telefone)
-                .imgPerfil(imgPerfil)
-                .imgCapa(imgCapa)
-                .logradouro(logradouro)
-                .bairro(bairro)
-                .cidade(cidade)
-                .estado(estado)
-                .cep(cep)
-                .complemento(complemento)
-                .numeroEndereco(numeroEndereco)
-                .build();
-    }
-
-    public Usuario buildUsuario() {
-
-        return Usuario.builder()
-
-                .roles(Arrays.asList(Usuario.ROLE_EMPRESA))
-                .username(email)
-                .password(senha)
-                .build();
-    } */
-
+    private String[] formasPagamento;
+    
 }
