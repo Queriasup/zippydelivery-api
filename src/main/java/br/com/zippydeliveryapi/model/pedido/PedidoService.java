@@ -84,4 +84,10 @@ public class PedidoService {
         repository.save(pedido);
     }
 
+    public List<Pedido> filtrarPedidosPorCliente(Long idCliente){
+        List<Pedido> listaPedidosPorCliente = repository.filtrarPedidosPorCliente(idCliente);
+        return listaPedidosPorCliente;
+
+    }
+
 }

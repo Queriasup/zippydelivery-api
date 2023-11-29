@@ -23,6 +23,7 @@ import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.pedido.PedidoService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
+import io.swagger.annotations.ApiOperation;
 import br.com.zippydeliveryapi.model.pedido.Pedido;
 import javax.validation.Valid;
 
@@ -67,56 +68,63 @@ public class PedidoController {
         return ResponseEntity.ok().build();
     }
 
+
+    
     private List<ItensPedido> criarListaItensPedidos(List<ItensPedidoRequest> requestItensPedido){
-
+        
         List<ItensPedido> itens = new ArrayList<ItensPedido>();
-
+        
         for (ItensPedidoRequest itensPedidoRequest : requestItensPedido) {
-
+            
             Produto produto = produtoService.findById(itensPedidoRequest.getId_produto());
-
+            
             ItensPedido item = ItensPedido.builder()
             .produto(produto)
             .qtdProduto(itensPedidoRequest.getQtdProduto())
             .valorUnitario(itensPedidoRequest.getValorUnitario()) 
             .valorTotal(itensPedidoRequest.getValorUnitario() * itensPedidoRequest.getQtdProduto())
             .build();
-
+            
             itens.add(item);
             
         }
         return itens;
     }
-
+    
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody @Valid PedidoRequest request) {
-
+        
         Empresa empresa = empresaService.findById(request.getId_empresa());
-
-
+        
+        
         Pedido pedidoNovo = Pedido.builder()
         .empresa(empresa)
-                .dataHora(request.getDataHora())
-                .formaPagamento(request.getFormaPagamento())
-                .statusPagamento(request.getStatusPagamento())
-                .statusPedido(request.getStatusPedido())
-                .taxaEntrega(request.getTaxaEntrega())
-                .logradouro(request.getLogradouro())
-                .bairro(request.getBairro())
-                .cidade(request.getCidade())
-                .estado(request.getEstado())
-                .cep(request.getCep())
-                .complemento(request.getComplemento())
-                .numeroEndereco(request.getNumeroEndereco())
-                .cliente(clienteService.findById(request.getId_cliente()))
-                .itensPedido(criarListaItensPedidos(request.getItens()))
-                .build();
-    
+        .dataHora(request.getDataHora())
+        .formaPagamento(request.getFormaPagamento())
+        .statusPagamento(request.getStatusPagamento())
+        .statusPedido(request.getStatusPedido())
+        .taxaEntrega(request.getTaxaEntrega())
+        .logradouro(request.getLogradouro())
+        .bairro(request.getBairro())
+        .cidade(request.getCidade())
+        .estado(request.getEstado())
+        .cep(request.getCep())
+        .complemento(request.getComplemento())
+        .numeroEndereco(request.getNumeroEndereco())
+        .cliente(clienteService.findById(request.getId_cliente()))
+        .itensPedido(criarListaItensPedidos(request.getItens()))
+        .build();
+        
         Pedido pedido = pedidoService.save(pedidoNovo);
-
+        
         return new ResponseEntity<Pedido>(pedido, HttpStatus.CREATED);
     }
-
-
+    
+    @ApiOperation(value = "Serviço responsável por listar pedidos de um mesmo cliente.")
+    @GetMapping("/porcliente/{id}")
+    public List<Pedido> pedidosPorCliente(@PathVariable Long id) {
+        return pedidoService.filtrarPedidosPorCliente(id);
+    }
+    
 }
 
