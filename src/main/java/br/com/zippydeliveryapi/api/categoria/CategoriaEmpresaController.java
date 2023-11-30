@@ -77,6 +77,7 @@ public class CategoriaEmpresaController {
         return ResponseEntity.ok().build();
     }
 
+    
 
 
 }
