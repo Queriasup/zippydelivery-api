@@ -69,9 +69,9 @@ public class ClienteService {
         return repository.findAll();
     }
 
-    public Cliente findByUsuario(String email) {
+    public Cliente findByUsuario(Long id) {
 
-        Usuario usuario = usuarioService.findByUsername(email);
+        Optional<Usuario> usuario = usuarioService.find(id);
 
         return repository.findByUsuario(usuario);
     }
