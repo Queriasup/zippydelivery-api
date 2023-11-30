@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.zippydeliveryapi.api.pedido.PedidoRequest;
 import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
 import br.com.zippydeliveryapi.model.cupom.CupomDescontoService;
-import br.com.zippydeliveryapi.model.pedido.Pedido;
-
 
 @RestController
 @RequestMapping("/api/cupom")
@@ -66,7 +63,7 @@ public class CupomDescontoController {
         @ApiResponse(code = 500, message = "Erro no servidor"),
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id){
         cupomDescontoService.delete(id);
         return ResponseEntity.ok().build();
     }
