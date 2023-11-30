@@ -20,6 +20,7 @@ public class PedidoRequest {
     private List<ItensPedidoRequest> itens;
     private Long id_cliente;
     private Long id_empresa;
+    private Long idCupom;
     private LocalDateTime dataHora;
     private String formaPagamento;
     private String statusPedido;

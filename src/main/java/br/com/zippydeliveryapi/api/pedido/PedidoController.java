@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.cliente.ClienteService;
+import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
+import br.com.zippydeliveryapi.model.cupom.CupomDescontoService;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
@@ -43,13 +45,18 @@ public class PedidoController {
     @Autowired
     private ProdutoService produtoService;
 
+    @Autowired
+    private CupomDescontoService cupomDescontoService;
+
     
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody @Valid PedidoRequest request) {
         Empresa empresa = empresaService.findById(request.getId_empresa());
-
+        CupomDesconto cupom = cupomDescontoService.findById(request.getIdCupom());
+      
         Pedido pedidoNovo = Pedido.builder()
                 .empresa(empresa)
+                .cupomDesconto(cupom)
                 .dataHora(request.getDataHora())
                 .formaPagamento(request.getFormaPagamento())
                 .statusPagamento(request.getStatusPagamento())
