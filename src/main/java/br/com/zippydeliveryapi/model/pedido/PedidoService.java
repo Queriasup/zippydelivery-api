@@ -4,10 +4,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.zippydeliveryapi.api.pedido.DashBoardResponse;
+import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoRepository;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
@@ -41,6 +44,22 @@ public class PedidoService {
         return valorTotal;
     }
 
+    private Pedido aplicarCupom(Pedido pedido, CupomDesconto cupom) {
+        Double valorTotalComCupom = pedido.getValorTotal();
+        Double desconto = 0.0;
+
+        // if (pedido.getValorTotal() >= cupom.getValorMinimoPedidoPermitido()) {
+        if (cupom.getPercentualDesconto() != null) {
+            desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
+            pedido.setValorTotal(valorTotalComCupom - desconto);
+        } else if (cupom.getValorDesconto() != null) {
+            pedido.setValorTotal(valorTotalComCupom - cupom.getValorDesconto());
+        }
+        // }
+
+        return pedido;
+    }
+
     @Transactional
     public Pedido save(Pedido novoPedido) {
         List<ItensPedido> itens = criaListaPedidos(novoPedido);
@@ -58,6 +77,19 @@ public class PedidoService {
             itensPedidoRepository.saveAndFlush(item);
         }
         pedidoSalvo.setItensPedido(itens);
+
+        if ((novoPedido.getCupomDesconto() != null)
+                && novoPedido.getValorTotal() >= novoPedido.getCupomDesconto().getValorMinimoPedidoPermitido()) {
+
+            LocalDate date = LocalDate.now();
+            LocalDate inicio = novoPedido.getCupomDesconto().getInicioVigencia();
+            LocalDate fim = novoPedido.getCupomDesconto().getFimVigencia();
+            // se data atual está dentro do perído vigente
+            if (!date.isBefore(inicio) && !date.isAfter(fim)) {
+                pedidoSalvo = aplicarCupom(pedidoSalvo, novoPedido.getCupomDesconto());
+            }
+        }
+
         return pedidoSalvo;
     }
 

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
 import br.com.zippydeliveryapi.model.cupom.CupomDescontoService;
 
@@ -46,6 +45,11 @@ public class CupomDescontoController {
     @GetMapping("/{id}")
     public CupomDesconto findById(@PathVariable Long id) {
         return cupomDescontoService.findById(id);
+    }
+
+    @GetMapping("/codigo/{codigo}")
+    public CupomDesconto findByCodigo(@PathVariable String codigo) {
+        return cupomDescontoService.findByCodigo(codigo);
     }
 
     @PutMapping("/{id}")

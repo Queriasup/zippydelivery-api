@@ -43,6 +43,17 @@ public class CupomDescontoService {
     }
 
     @Transactional
+    public CupomDesconto findByCodigo(String codigo) {
+        Optional<CupomDesconto> consulta = repository.findByCodigo(codigo);
+
+        if (consulta.isPresent()) {
+            return consulta.get();
+        } else {
+            return null;
+        }
+    }
+
+    @Transactional
     public void update(Long id, CupomDescontoRequest cupomAlterado) {
         CupomDesconto cupom = repository.findById(id).get();
 

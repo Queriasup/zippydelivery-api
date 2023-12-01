@@ -3,6 +3,8 @@ package br.com.zippydeliveryapi.api.pedido;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,11 +24,10 @@ import br.com.zippydeliveryapi.model.cupom.CupomDescontoService;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
+import br.com.zippydeliveryapi.model.pedido.Pedido;
 import br.com.zippydeliveryapi.model.pedido.PedidoService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
-import br.com.zippydeliveryapi.model.pedido.Pedido;
-import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/pedido")
@@ -52,7 +53,7 @@ public class PedidoController {
     @PostMapping
     public ResponseEntity<Pedido> save(@RequestBody @Valid PedidoRequest request) {
         Empresa empresa = empresaService.findById(request.getId_empresa());
-        CupomDesconto cupom = cupomDescontoService.findById(request.getIdCupom());
+        CupomDesconto cupom = cupomDescontoService.findByCodigo(request.getCodigoCupom());
       
         Pedido pedidoNovo = Pedido.builder()
                 .empresa(empresa)
