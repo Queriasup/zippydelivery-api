@@ -20,6 +20,8 @@ import org.thymeleaf.templatemode.TemplateMode;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
 import br.com.zippydeliveryapi.model.cliente.Cliente;
+import br.com.zippydeliveryapi.model.empresa.Empresa;
+import br.com.zippydeliveryapi.model.pedido.Pedido;
 
 
 @Component
@@ -53,6 +55,26 @@ public class EmailService {
         params.setVariable("cliente", cliente);
 
         this.sendMailTemplate("bem_vindo_cliente.html", cliente.getUsuario().getUsername(), assuntoEmail, params);
+    }
+    
+    public void enviarEmailConfirmacaoCadastroEmpresa(Empresa empresa) {
+
+        String assuntoEmail = "Bem vindo ao nossa plataforma";
+
+        Context params = new Context();
+        params.setVariable("empresa", empresa);
+
+        this.sendMailTemplate("bem_vindo_empresa.html", empresa.getUsuario().getUsername(), assuntoEmail, params);
+    }
+
+      public void enviarEmailFinalizaçãoPedido(Pedido pedido) {
+
+        String assuntoEmail = "Pedido feito";
+
+        Context params = new Context();
+        params.setVariable("pedido", pedido);
+
+        this.sendMailTemplate("pedido_feito.html", pedido.getCliente().getUsuario().getUsername(), assuntoEmail, params);
     }
 
     @Async

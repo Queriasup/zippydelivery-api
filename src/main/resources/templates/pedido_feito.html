@@ -45,7 +45,7 @@
   					<table role="presentation" style="width:100%; background:#ffffff; margin: 0 auto;" align="center" border="0" cellspacing="0" cellpadding="0">
   						<tr>
   							<td style="padding: 0 1.5em;">
-    							<h1 style="text-align: center; font-size: 1.5em; margin-bottom: 1.5rem;">Bem vindo ao nosso aplicativo!</h1>
+    							<h1 style="text-align: center; font-size: 1.5em; margin-bottom: 1.5rem;">Pedido realizado com sucesso!</h1>
   							</td>
   						</tr>
   					</table>
@@ -61,9 +61,9 @@
   					<table role="presentation" style="width:100%; background:#ffffff; margin: 0 auto;" align="center" border="0" cellspacing="0" cellpadding="0">
   						<tr>
   							<td style="padding: 0 1.5em;">
-    							<p>Prezado/a <span th:text="${cliente.nome} ?: ''"></span></p>
-    							<p>Seu cadastro foi realizado com <b>sucesso</b>, seja bem-vindo ao Zippy delivery!</p>
-    							<p>Agora é muito mais fácil e seguro realizar pedidos pelo celular.<br>
+    							
+    							<p>Seu pedido de R$ <span th:text="${pedido.valorTotal} ?: ''"></span>  foi finalizado com <b>sucesso</b></p>
+    							<p>Em breve se produto será entregue<br>
       							Conheça nossos produtos e desfrute da melhor relação qualidade/preço do mercado!</p>
   							</td>
   						</tr>
