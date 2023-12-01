@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresa;
 import br.com.zippydeliveryapi.model.categoria.CategoriaEmpresaService;
+import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.empresa.Empresa;
 import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 
@@ -91,6 +92,14 @@ public class EmpresaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         empresaService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/findByUser/{id}")
+    public Empresa findByUser(@PathVariable Long id) {
+        Empresa empresa = empresaService.findByUsuario(id);
+
+        return empresa;
     }
 
 
