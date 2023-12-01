@@ -2,12 +2,14 @@ package br.com.zippydeliveryapi.model.cupom;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.zippydeliveryapi.api.cupom.CupomDescontoRequest;
+import br.com.zippydeliveryapi.util.exception.CupomDescontoException;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 
 @Service
@@ -18,6 +20,8 @@ public class CupomDescontoService {
 
     @Transactional
     public CupomDesconto save(CupomDesconto cupom) {
+        validateDateRange(cupom);
+
         cupom.setHabilitado(Boolean.TRUE);
         cupom.setVersao(1L);
         cupom.setDataCriacao(LocalDate.now());
@@ -59,6 +63,14 @@ public class CupomDescontoService {
         CupomDesconto cupom = repository.findById(id).get();
         cupom.setHabilitado(Boolean.FALSE);
         cupom.setVersao(cupom.getVersao() + 1);
+        cupom.setCodigo("");
         repository.save(cupom);
+    }
+
+    private void validateDateRange(CupomDesconto cupom) {
+        Objects.requireNonNull(cupom, "CupomDesconto não pode ser nulo");
+        if (!cupom.getFimVigencia().isAfter(cupom.getInicioVigencia())) {
+            throw new CupomDescontoException(CupomDescontoException.MESSAGE_DATA_INVALIDA);
+        }
     }
 }

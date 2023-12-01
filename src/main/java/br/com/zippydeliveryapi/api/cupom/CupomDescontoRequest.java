@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
@@ -24,12 +23,7 @@ public class CupomDescontoRequest {
   @Length(max = 10, message = "O código deverá ter no máximo {max} caracteres")
   private String codigo;
 
-  @NotNull(message = "O % de desconto é de preenchimento obrigatório")
-  //@NotBlank(message = "O % de desconto é de preenchimento obrigatório")
-  private Double percentualDesconto;
-
   @JsonFormat(pattern = "dd/MM/yyyy")
-  @Past
   private LocalDate inicioVigencia;
 
   @JsonFormat(pattern = "dd/MM/yyyy")
@@ -37,6 +31,7 @@ public class CupomDescontoRequest {
   private LocalDate fimVigencia;
 
   private Double valorDesconto;
+  private Double percentualDesconto;
   private Double valorMinimoPedidoPermitido;
   private Integer quantidadeMaximaUso;
 
