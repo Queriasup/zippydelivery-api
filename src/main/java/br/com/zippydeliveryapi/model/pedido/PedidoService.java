@@ -5,16 +5,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.tomcat.jni.Local;
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.zippydeliveryapi.api.pedido.DashBoardResponse;
 import br.com.zippydeliveryapi.model.cupom.CupomDesconto;
+import br.com.zippydeliveryapi.model.cupom.CupomDescontoService;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedido;
 import br.com.zippydeliveryapi.model.itensPedido.ItensPedidoRepository;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
-import javax.transaction.Transactional;
 
 @Service
 public class PedidoService {
@@ -24,6 +25,9 @@ public class PedidoService {
 
     @Autowired
     private ItensPedidoRepository itensPedidoRepository;
+
+    @Autowired
+    private CupomDescontoService cupomDescontoService;
 
     private List<ItensPedido> criaListaPedidos(Pedido pedido) {
         List<ItensPedido> itens = new ArrayList<ItensPedido>();
@@ -48,15 +52,16 @@ public class PedidoService {
         Double valorTotalComCupom = pedido.getValorTotal();
         Double desconto = 0.0;
 
-        // if (pedido.getValorTotal() >= cupom.getValorMinimoPedidoPermitido()) {
         if (cupom.getPercentualDesconto() != null) {
             desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
             pedido.setValorTotal(valorTotalComCupom - desconto);
         } else if (cupom.getValorDesconto() != null) {
             pedido.setValorTotal(valorTotalComCupom - cupom.getValorDesconto());
         }
-        // }
 
+        cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
+        cupomDescontoService.update(cupom.getId(), cupom);
+    
         return pedido;
     }
 
@@ -70,6 +75,7 @@ public class PedidoService {
         novoPedido.setHabilitado(true);
 
         Pedido pedidoSalvo = repository.saveAndFlush(novoPedido);
+        CupomDesconto cupom = novoPedido.getCupomDesconto();
 
         for (ItensPedido item : itens) {
             item.setPedido(pedidoSalvo);
@@ -78,23 +84,20 @@ public class PedidoService {
         }
         pedidoSalvo.setItensPedido(itens);
 
-        if ((novoPedido.getCupomDesconto() != null)
-                && novoPedido.getValorTotal() >= novoPedido.getCupomDesconto().getValorMinimoPedidoPermitido()) {
-
-            LocalDate date = LocalDate.now();
-            LocalDate inicio = novoPedido.getCupomDesconto().getInicioVigencia();
-            LocalDate fim = novoPedido.getCupomDesconto().getFimVigencia();
-            // se data atual está dentro do perído vigente
-            if (!date.isBefore(inicio) && !date.isAfter(fim)) {
-                pedidoSalvo = aplicarCupom(pedidoSalvo, novoPedido.getCupomDesconto());
+        if (cupom != null && novoPedido.getValorTotal() >= cupom.getValorMinimoPedidoPermitido()) {
+            if (cupom.getQuantidadeMaximaUso() > 0) {
+                LocalDate date = LocalDate.now();
+                LocalDate inicio = cupom.getInicioVigencia();
+                LocalDate fim = cupom.getFimVigencia();
+                if (!date.isBefore(inicio) && !date.isAfter(fim)) {
+                    pedidoSalvo = aplicarCupom(pedidoSalvo, cupom);
+                }
             }
         }
-
         return pedidoSalvo;
     }
 
     public List<Pedido> findAll() {
-        // List<Pedido> pedidos = repository.findAll();
         return repository.findAll();
     }
 

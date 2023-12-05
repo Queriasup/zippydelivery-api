@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.zippydeliveryapi.api.cupom.CupomDescontoRequest;
 import br.com.zippydeliveryapi.util.exception.CupomDescontoException;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 
@@ -54,7 +53,7 @@ public class CupomDescontoService {
     }
 
     @Transactional
-    public void update(Long id, CupomDescontoRequest cupomAlterado) {
+    public void update(Long id, CupomDesconto cupomAlterado) {
         CupomDesconto cupom = repository.findById(id).get();
 
         cupom.setCodigo(cupomAlterado.getCodigo());

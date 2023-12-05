@@ -53,7 +53,7 @@ public class CupomDescontoController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CupomDesconto> update(@PathVariable("id") Long id, @RequestBody CupomDescontoRequest request) {
+    public ResponseEntity<CupomDesconto> update(@PathVariable("id") Long id, @RequestBody CupomDesconto request) {
         cupomDescontoService.update(id, request);
         return ResponseEntity.ok().build();
     }
