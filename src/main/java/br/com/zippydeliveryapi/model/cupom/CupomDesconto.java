@@ -26,10 +26,10 @@ public class CupomDesconto extends EntidadeAuditavel{
     @Column(unique = true)
     private String codigo;
 
-    @Column
+    @Column(nullable = true)
     private Double percentualDesconto;
 
-    @Column
+    @Column(nullable = true)
     private Double valorDesconto;
 
     @Column

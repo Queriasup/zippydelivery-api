@@ -52,13 +52,14 @@ public class PedidoService {
         Double valorTotalComCupom = pedido.getValorTotal();
         Double desconto = 0.0;
 
-        if (cupom.getPercentualDesconto() != null) {
+        if (cupom.getPercentualDesconto() != null || cupom.getPercentualDesconto() != 0.0) {
             desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
             pedido.setValorTotal(valorTotalComCupom - desconto);
-        } else if (cupom.getValorDesconto() != null) {
-            pedido.setValorTotal(valorTotalComCupom - cupom.getValorDesconto());
-        }
-
+        } 
+        if (cupom.getValorDesconto() != null || cupom.getValorDesconto() != 0.0) {
+            desconto = cupom.getValorDesconto();    
+            pedido.setValorTotal(valorTotalComCupom - desconto);
+        }    
         cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
         cupomDescontoService.update(cupom.getId(), cupom);
     
