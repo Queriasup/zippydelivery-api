@@ -77,6 +77,12 @@ public class PedidoService {
         return repository.findById(id).get();
     }
 
+    
+    public List<Pedido> findByIdEmpresa(Long id) {
+        return repository.findByidEmpresa(id);
+    }
+
+
     @Transactional
     public void update(Long id, String statusPagamento, String statusPedido) {
         Pedido pedido = repository.findById(id).get();

@@ -80,6 +80,11 @@ public class PedidoController {
     public Pedido findById(@PathVariable Long id) {
         return pedidoService.findById(id);
     }
+    
+    @GetMapping("/findByEmpresa/{id}")
+    public List<Pedido> findByIdEmpresa(@PathVariable Long id) {
+        return pedidoService.findByIdEmpresa(id);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Pedido> update(@PathVariable("id") Long id, @RequestBody PedidoRequest request) {
