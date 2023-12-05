@@ -8,11 +8,17 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.zippydeliveryapi.model.produto.ProdutoRepository;
+
 @Service
 public class CategoriaProdutoService {
 
     @Autowired
     private CategoriaProdutoRepository repository;
+
+    
+    @Autowired
+    private ProdutoRepository produtoRepository;
 
     @Transactional
     public CategoriaProduto save(CategoriaProduto categoriaProduto) {
@@ -29,6 +35,21 @@ public class CategoriaProdutoService {
     public CategoriaProduto findById(Long id) {
         return repository.findById(id).get();
     }
+
+     public List<CategoriaProduto> findByIdEmpresa(Long id) {
+        return repository.findByEmpresaId(id);
+    }
+
+    // public List<CategoriasProdutoEmpresaResponse> findCategoriasByIdEmpresa(Long id) {
+       
+    //     List<CategoriaProduto> categorias = repository.findByEmpresaId(id);
+    //    List<Produto> produtos =  produtoRepository.findByEmpresaId(id);
+       
+    //     return 
+        
+       
+    // }
+
 
     @Transactional
     public void update(Long id, CategoriaProduto categoriaProdutoAlterado) {
