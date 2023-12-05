@@ -1,5 +1,7 @@
 package br.com.zippydeliveryapi.model.acesso;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +36,10 @@ public class UsuarioService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 	    return repository.findByUsername(username);
     }
+
+    public Optional<Usuario> find(Long id) {
+        return repository.findById(id);
+    }
+
+    
 }

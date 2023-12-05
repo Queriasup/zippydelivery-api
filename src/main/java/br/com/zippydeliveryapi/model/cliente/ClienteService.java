@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.acesso.UsuarioService;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 
@@ -66,6 +67,13 @@ public class ClienteService {
 
     public List<Cliente> findAll() {
         return repository.findAll();
+    }
+
+    public Cliente findByUsuario(Long id) {
+
+        Optional<Usuario> usuario = usuarioService.find(id);
+
+        return repository.findByUsuario(usuario);
     }
 
     public Cliente findById(Long id) {

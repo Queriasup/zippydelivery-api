@@ -57,6 +57,7 @@ public class CategoriaEmpresaController {
             @ApiResponse(code = 404, message = "Não foi encontrado um registro para o Id informado."),
             @ApiResponse(code = 500, message = "Foi gerado um erro no servidor."),
     })
+    
     @GetMapping("/{id}")
     public CategoriaEmpresa findById(@PathVariable Long id) {
         return categoriaEmpresaService.findById(id);
@@ -76,6 +77,7 @@ public class CategoriaEmpresaController {
         return ResponseEntity.ok().build();
     }
 
+    
 
 
 }
