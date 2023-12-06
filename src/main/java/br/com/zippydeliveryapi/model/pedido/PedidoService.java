@@ -48,55 +48,65 @@ public class PedidoService {
         return valorTotal;
     }
 
-    private Pedido aplicarCupom(Pedido pedido, CupomDesconto cupom) {
-        Double valorTotalComCupom = pedido.getValorTotal();
-        Double desconto = 0.0;
-
-        if (cupom.getPercentualDesconto() != null || cupom.getPercentualDesconto() != 0.0) {
-            desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
-            pedido.setValorTotal(valorTotalComCupom - desconto);
-        } 
-        if (cupom.getValorDesconto() != null || cupom.getValorDesconto() != 0.0) {
-            desconto = cupom.getValorDesconto();    
-            pedido.setValorTotal(valorTotalComCupom - desconto);
-        }    
-        cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
-        cupomDescontoService.update(cupom.getId(), cupom);
+    private boolean validarCupom(CupomDesconto cupom) {
+        LocalDate date = LocalDate.now();
+        LocalDate inicio = cupom.getInicioVigencia();
+        LocalDate fim = cupom.getFimVigencia();
     
-        return pedido;
+        return (date.isEqual(inicio) || date.isAfter(inicio)) && (date.isEqual(fim) || date.isBefore(fim));
     }
 
-    @Transactional
-    public Pedido save(Pedido novoPedido) {
-        List<ItensPedido> itens = criaListaPedidos(novoPedido);
-        novoPedido.setItensPedido(null);
-        novoPedido.setDataHora(LocalDateTime.now());
-        novoPedido.setStatusPagamento("Em aberto");
-        novoPedido.setValorTotal(this.calcularValorTotalPedido(itens));
-        novoPedido.setHabilitado(true);
-
-        Pedido pedidoSalvo = repository.saveAndFlush(novoPedido);
-        CupomDesconto cupom = novoPedido.getCupomDesconto();
-
+    private void aplicarDescontoNoPedido(Pedido pedido, Double desconto) {
+        Double valorTotalComDesconto = pedido.getValorTotal() - desconto;
+        pedido.setValorTotal(valorTotalComDesconto);
+    }
+    
+    private void aplicarCupom(Pedido pedido, CupomDesconto cupom) {
+        Double desconto = 0.0;
+    
+        if (cupom.getPercentualDesconto() != null && cupom.getPercentualDesconto() != 0.0) {
+            desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
+        } else if (cupom.getValorDesconto() != null && cupom.getValorDesconto() != 0.0) {
+            desconto = cupom.getValorDesconto();
+        }
+    
+        aplicarDescontoNoPedido(pedido, desconto);
+        cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
+        cupomDescontoService.update(cupom.getId(), cupom);
+    }
+    
+    private Pedido salvarPedido(Pedido pedido, List<ItensPedido> itens) {
+        pedido.setItensPedido(null);
+        pedido.setDataHora(LocalDateTime.now());
+        pedido.setStatusPagamento("Em aberto");
+        pedido.setValorTotal(calcularValorTotalPedido(itens));
+        pedido.setHabilitado(true);
+    
+        Pedido pedidoSalvo = repository.saveAndFlush(pedido);
+    
         for (ItensPedido item : itens) {
             item.setPedido(pedidoSalvo);
             item.setHabilitado(true);
             itensPedidoRepository.saveAndFlush(item);
         }
+    
         pedidoSalvo.setItensPedido(itens);
-
-        if (cupom != null && novoPedido.getValorTotal() >= cupom.getValorMinimoPedidoPermitido()) {
-            if (cupom.getQuantidadeMaximaUso() > 0) {
-                LocalDate date = LocalDate.now();
-                LocalDate inicio = cupom.getInicioVigencia();
-                LocalDate fim = cupom.getFimVigencia();
-                if (!date.isBefore(inicio) && !date.isAfter(fim)) {
-                    pedidoSalvo = aplicarCupom(pedidoSalvo, cupom);
-                }
-            }
-        }
+    
         return pedidoSalvo;
     }
+    
+    @Transactional
+    public Pedido save(Pedido novoPedido) {
+        List<ItensPedido> itens = criaListaPedidos(novoPedido);
+        Pedido pedidoSalvo = salvarPedido(novoPedido, itens);
+        CupomDesconto cupom = novoPedido.getCupomDesconto();
+    
+        if (cupom != null && validarCupom(cupom)) {
+            aplicarCupom(pedidoSalvo, cupom);
+        }
+    
+        return pedidoSalvo;
+    }  
 
     public List<Pedido> findAll() {
         return repository.findAll();
