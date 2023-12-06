@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.acesso.UsuarioService;
 import br.com.zippydeliveryapi.model.mensagens.EmailService;
-import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 import javax.transaction.Transactional;
 
