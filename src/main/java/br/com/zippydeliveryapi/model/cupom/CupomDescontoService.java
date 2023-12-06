@@ -8,11 +8,12 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.zippydeliveryapi.model.pedido.Pedido;
 import br.com.zippydeliveryapi.util.exception.CupomDescontoException;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 
 @Service
-public class CupomDescontoService {
+public class CupomDescontoService { 
 
     @Autowired
     private CupomDescontoRepository repository;
@@ -77,10 +78,37 @@ public class CupomDescontoService {
         repository.save(cupom);
     }
 
-    private void validateDateRange(CupomDesconto cupom) {
+    public void validateDateRange(CupomDesconto cupom) {
         Objects.requireNonNull(cupom, "CupomDesconto não pode ser nulo");
         if (!cupom.getFimVigencia().isAfter(cupom.getInicioVigencia())) {
             throw new CupomDescontoException(CupomDescontoException.MESSAGE_DATA_INVALIDA);
         }
+    }
+
+    public boolean validarCupom(CupomDesconto cupom) {
+        LocalDate date = LocalDate.now();
+        LocalDate inicio = cupom.getInicioVigencia();
+        LocalDate fim = cupom.getFimVigencia();
+    
+        return (date.isEqual(inicio) || date.isAfter(inicio)) && (date.isEqual(fim) || date.isBefore(fim));
+    }
+
+    public void aplicarDescontoNoPedido(Pedido pedido, Double desconto) {
+        Double valorTotalComDesconto = pedido.getValorTotal() - desconto;
+        pedido.setValorTotal(valorTotalComDesconto);
+    }
+    
+    public void aplicarCupom(Pedido pedido, CupomDesconto cupom) {
+        Double desconto = 0.0;
+    
+        if (cupom.getPercentualDesconto() != null && cupom.getPercentualDesconto() != 0.0) {
+            desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
+        } else if (cupom.getValorDesconto() != null && cupom.getValorDesconto() != 0.0) {
+            desconto = cupom.getValorDesconto();
+        }
+    
+        aplicarDescontoNoPedido(pedido, desconto);
+        cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
+        this.update(cupom.getId(), cupom);
     }
 }
