@@ -40,4 +40,6 @@ public class UsuarioService implements UserDetailsService {
     public Optional<Usuario> find(Long id) {
         return repository.findById(id);
     }
+
+    
 }

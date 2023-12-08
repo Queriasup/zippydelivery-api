@@ -1,10 +1,7 @@
 package br.com.zippydeliveryapi.api.empresa;
 
-
 import java.util.List;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -91,6 +88,14 @@ public class EmpresaController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         empresaService.delete(id);
         return ResponseEntity.ok().build();
+    }
+
+
+    @GetMapping("/findByUser/{id}")
+    public Empresa findByUser(@PathVariable Long id) {
+        Empresa empresa = empresaService.findByUsuario(id);
+
+        return empresa;
     }
 
 

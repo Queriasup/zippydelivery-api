@@ -2,12 +2,14 @@ package br.com.zippydeliveryapi.model.empresa;
 
 import java.time.LocalDate;
 import java.util.List;
-
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.acesso.UsuarioService;
+import br.com.zippydeliveryapi.model.mensagens.EmailService;
 import br.com.zippydeliveryapi.util.exception.EntidadeNaoEncontradaException;
 import javax.transaction.Transactional;
 
@@ -20,6 +22,10 @@ public class EmpresaService {
     @Autowired
     private UsuarioService usuarioService;
 
+    
+    @Autowired
+    private EmailService emailService;
+
 
     @Transactional
     public Empresa save(Empresa empresa) {
@@ -29,6 +35,10 @@ public class EmpresaService {
         empresa.setVersao(1L);
         empresa.setDataCriacao(LocalDate.now());
         empresa.setStatus("Pendente");
+
+
+        emailService.enviarEmailConfirmacaoCadastroEmpresa(empresa);
+
         return repository.save(empresa);
     }
 
@@ -86,7 +96,16 @@ public class EmpresaService {
         empresa.getUsuario().setUsername("");
         empresa.getUsuario().setPassword("");
 
+
         repository.save(empresa);
     }
+
+    public Empresa findByUsuario(Long id) {
+
+        Optional<Usuario> usuario = usuarioService.find(id);
+
+        return repository.findByUsuario(usuario);
+    }
+
 
 }
