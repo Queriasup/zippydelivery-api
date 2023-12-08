@@ -49,33 +49,6 @@ public class PedidoService {
         }
         return valorTotal;
     }
-
-    private boolean validarCupom(CupomDesconto cupom) {
-        LocalDate date = LocalDate.now();
-        LocalDate inicio = cupom.getInicioVigencia();
-        LocalDate fim = cupom.getFimVigencia();
-    
-        return (date.isEqual(inicio) || date.isAfter(inicio)) && (date.isEqual(fim) || date.isBefore(fim));
-    }
-
-    private void aplicarDescontoNoPedido(Pedido pedido, Double desconto) {
-        Double valorTotalComDesconto = pedido.getValorTotal() - desconto;
-        pedido.setValorTotal(valorTotalComDesconto);
-    }
-    
-    private void aplicarCupom(Pedido pedido, CupomDesconto cupom) {
-        Double desconto = 0.0;
-    
-        if (cupom.getPercentualDesconto() != null && cupom.getPercentualDesconto() != 0.0) {
-            desconto = pedido.getValorTotal() * (cupom.getPercentualDesconto() / 100);
-        } else if (cupom.getValorDesconto() != null && cupom.getValorDesconto() != 0.0) {
-            desconto = cupom.getValorDesconto();
-        }
-    
-        aplicarDescontoNoPedido(pedido, desconto);
-        cupom.setQuantidadeMaximaUso(cupom.getQuantidadeMaximaUso() - 1);
-        cupomDescontoService.update(cupom.getId(), cupom);
-    }
     
     private Pedido salvarPedido(Pedido pedido, List<ItensPedido> itens) {
         pedido.setItensPedido(null);
@@ -104,8 +77,8 @@ public class PedidoService {
         Pedido pedidoSalvo = salvarPedido(novoPedido, itens);
         CupomDesconto cupom = novoPedido.getCupomDesconto();
     
-        if (cupom != null && validarCupom(cupom)) {
-            aplicarCupom(pedidoSalvo, cupom);
+        if (cupom != null && cupomDescontoService.validarCupom(cupom)) {
+            cupomDescontoService.aplicarCupom(pedidoSalvo, cupom);
         }
     
         return pedidoSalvo;
