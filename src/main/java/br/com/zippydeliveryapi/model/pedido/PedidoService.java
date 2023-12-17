@@ -92,7 +92,6 @@ public class PedidoService {
         return repository.findById(id).get();
     }
 
-    
     public List<Pedido> findByIdEmpresa(Long id) {
         return repository.findByidEmpresa(id);
     }
@@ -114,6 +113,8 @@ public class PedidoService {
 
         pedido.setHabilitado(Boolean.FALSE);
         pedido.setVersao(pedido.getVersao() + 1);
+        pedido.setStatusPedido("Cancelado");
+        pedido.setStatusPagamento("Estornado");
 
         repository.save(pedido);
     }
