@@ -43,8 +43,6 @@ public class ClienteRequest {
    private String senha;
 
 
-
-
    private String logradouro;
    private String bairro;
    private String cidade;
@@ -66,7 +64,8 @@ public class ClienteRequest {
             .complemento(complemento)
             .build();
    }
-    public Usuario buildUsuario() {
+
+  public Usuario buildUsuario() {
 	
 	return Usuario.builder()
 		.username(email)
@@ -74,5 +73,6 @@ public class ClienteRequest {
 		.roles(Arrays.asList(Usuario.ROLE_CLIENTE))
 		.build();
     }
+
 
 }

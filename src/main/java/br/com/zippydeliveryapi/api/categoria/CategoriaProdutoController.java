@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.categoria.CategoriaProduto;
 import br.com.zippydeliveryapi.model.categoria.CategoriaProdutoService;
+import br.com.zippydeliveryapi.model.empresa.EmpresaService;
 import br.com.zippydeliveryapi.model.produto.Produto;
 import br.com.zippydeliveryapi.model.produto.ProdutoService;
 import io.swagger.annotations.ApiOperation;
@@ -34,12 +35,16 @@ public class CategoriaProdutoController {
     private CategoriaProdutoService categoriaProdutoService;
 
     @Autowired
+    private EmpresaService empresaService;
+
+    @Autowired
     private ProdutoService produtoService;
 
     @ApiOperation(value = "Serviço responsável por salvar uma categoria de produto no sistema.")
     @PostMapping
     public ResponseEntity<CategoriaProduto> save(@RequestBody @Valid CategoriaProdutoRequest request) {
         CategoriaProduto categoriaProduto = request.build();
+        categoriaProduto.setEmpresa(empresaService.findById(request.getEmpresa_id()));
         CategoriaProduto categoriaProdutoNova = categoriaProdutoService.save(categoriaProduto);
 
         return new ResponseEntity<CategoriaProduto>(categoriaProdutoNova, HttpStatus.CREATED);
@@ -74,14 +79,17 @@ public class CategoriaProdutoController {
     @ApiOperation(value = "Serviço responsável por deletar uma categoria de produto referente ao Id passado na URL.")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-
         List<Produto> produtos = produtoService.findByCategory(id);
-        
         for(Produto p : produtos){
             produtoService.delete(p.getId());
         }
-
         categoriaProdutoService.delete(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/categoriasprodutoporempresa/{id}")
+    public List<CategoriaProduto> VerCategoriasProdutosPorEmpresa(@PathVariable Long id){
+        return categoriaProdutoService.findByIdEmpresa(id);
+    }
+     
 }

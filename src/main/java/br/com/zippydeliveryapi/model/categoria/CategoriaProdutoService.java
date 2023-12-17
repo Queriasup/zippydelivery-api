@@ -30,6 +30,16 @@ public class CategoriaProdutoService {
         return repository.findById(id).get();
     }
 
+     public List<CategoriaProduto> findByIdEmpresa(Long id) {
+        return repository.findByEmpresaId(id);
+    }
+
+    // public List<CategoriasProdutoEmpresaResponse> findCategoriasByIdEmpresa(Long id) { 
+    //     List<CategoriaProduto> categorias = repository.findByEmpresaId(id);
+    //    List<Produto> produtos =  produtoRepository.findByEmpresaId(id);
+    //     return  
+    // }
+
     @Transactional
     public void update(Long id, CategoriaProduto categoriaProdutoAlterado) {
 
