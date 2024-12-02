@@ -5,8 +5,12 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.cliente.Cliente;
+import br.com.zippydeliveryapi.model.enderecoCliente.EnderecoCliente;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -42,12 +46,8 @@ public class ClienteRequest {
    @NotBlank(message = "A senha é de preenchimento obrigatório")
    private String senha;
 
-
-   private String logradouro;
-   private String bairro;
-   private String cidade;
-   private String estado;
-   private String complemento;
+   @Builder.Default
+   private List<EnderecoCliente> enderecos = new ArrayList<EnderecoCliente>();
 
    public Cliente build() {
       return Cliente.builder()
@@ -56,12 +56,7 @@ public class ClienteRequest {
             .cpf(cpf)
             .email(email)
             .senha(senha)
-            .logradouro(logradouro)
-            .bairro(bairro)
-            .cidade(cidade)
-            .estado(estado)
-            .cep(cep)
-            .complemento(complemento)
+            .enderecos(enderecos)
             .build();
    }
 

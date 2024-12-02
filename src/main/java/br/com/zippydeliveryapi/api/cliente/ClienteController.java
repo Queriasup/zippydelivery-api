@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.zippydeliveryapi.model.cliente.Cliente;
 import br.com.zippydeliveryapi.model.cliente.ClienteService;
-
+import br.com.zippydeliveryapi.model.enderecoCliente.EnderecoCliente;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -77,5 +77,13 @@ public class ClienteController {
         Cliente cliente = clienteService.findByUsuario(id);
         return cliente;
     }
+
+    @ApiOperation(value = "Serviço responsável por adicionar um endereço no cadastro do cliente do ID passado na URL.")
+    @PostMapping("/endereco/{id}")
+    public ResponseEntity<EnderecoCliente> adicionarEnderecoCliente(@PathVariable("id") Long clienteId, @RequestBody EnderecoClienteRequest request) {
+
+       EnderecoCliente endereco = clienteService.adicionarEnderecoCliente(clienteId, request.build());
+       return new ResponseEntity<EnderecoCliente>(endereco, HttpStatus.CREATED);
+   }
 
 }
