@@ -41,7 +41,7 @@ public class ClienteService {
         cliente.setDataCriacao(LocalDate.now());
         Cliente clienteSalvo = repository.save(cliente);
  
-        emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
+        //emailService.enviarEmailConfirmacaoCadastroCliente(clienteSalvo);
  
         return clienteSalvo;
     }

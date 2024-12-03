@@ -2,6 +2,8 @@ package br.com.zippydeliveryapi.model.cliente;
 
 import org.hibernate.annotations.Where;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.zippydeliveryapi.model.acesso.Usuario;
 import br.com.zippydeliveryapi.model.enderecoCliente.EnderecoCliente;
 import br.com.zippydeliveryapi.util.entity.EntidadeAuditavel;
@@ -11,6 +13,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 //import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -31,6 +34,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Cliente extends EntidadeAuditavel {
 
+  
   @ManyToOne
    @JoinColumn(nullable = false)
    private Usuario usuario;
@@ -47,7 +51,8 @@ public class Cliente extends EntidadeAuditavel {
     //@Column(nullable = false, unique = true)
     private String senha;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EnderecoCliente> enderecos;
 
 }
